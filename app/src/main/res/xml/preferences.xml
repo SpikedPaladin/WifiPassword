@@ -1,0 +1,33 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <PreferenceCategory
+        android:title="@string/preference_category_general">
+        
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="back_pressed_enabled"
+            android:summaryOff="@string/preference_exit_confirm_disabled"
+            android:summaryOn="@string/preference_exit_confirm_enabled"
+            android:title="@string/preference_exit_confirm_title"/>
+        
+        <ListPreference
+            android:defaultValue="dialog"
+            android:key="back_pressed_action"
+            android:dependency="back_pressed_enabled"
+            android:dialogTitle="@string/preference_confirm_action"
+            android:entries="@array/back_entries"
+            android:entryValues="@array/back_values"
+            android:summary="@string/preference_confirm_action_summary"
+            android:title="@string/preference_confirm_action"/>
+        
+        <CheckBoxPreference
+            android:key="ad_enabled"
+            android:defaultValue="true"
+            android:title="@string/preference_ad_title"
+            android:summaryOn="@string/preference_ad_enabled"
+            android:summaryOff="@string/preference_ad_disabled"/>
+        
+    </PreferenceCategory>
+    
+</PreferenceScreen>

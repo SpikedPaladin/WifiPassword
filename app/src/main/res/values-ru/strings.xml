@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_exit_title">Выход</string>
+    <string name="action_about">О приложении</string>
+    <string name="dialog_exit_message">Вы уверены что хотите выйти?</string>
+    <string name="action_cancel">Отмена</string>
+    <string name="action_confirm">Подтвердить</string>
+    <string name="app_version">Версия 1.0.3</string>
+    <string name="message_copied_tag">Тэг скопирован</string>
+    <string name="preference_category_general">Основные</string>
+    <string name="action_settings">Настройки</string>
+    <string name="preference_confirm_action">Выберите действие</string>
+    <string name="preference_confirm_action_summary">Действие для подтверждения выхода</string>
+    <string name="preference_exit_confirm_enabled">Подтверждение выхода в главном меню</string>
+    <string name="preference_exit_confirm_disabled">Выход по нажатию кнопки назад</string>
+    <string name="preference_exit_confirm_title">Подтверждение выхода</string>
+    <string name="array_back_dialog">Диалоговое окно</string>
+    <string name="array_back_press">Двойное нажатие</string>
+    <string name="message_press_back">Нажмите снова для выхода</string>
+    <string name="action_search">Поиск</string>
+    <string name="action_info">Информация</string>
+    <string name="action_copy">Копировать пароль</string>
+    <string name="action_discord">Дискорд</string>
+    <string name="action_github">Гитхаб</string>
+    <string name="action_vk">Вконтакте</string>
+    <string name="action_share">Поделиться</string>
+    <string name="action_code">Сгенерировать QR код</string>
+    <string name="description_code">QR Код</string>
+    <string name="message_copied_password">Пароль скопирован в буфер обмена</string>
+    <string name="action_save">Сохранить</string>
+    <string name="message_interprice_error">WPA Enterprise не поддерживается</string>
+    <string name="message_code_error">Ошибка при создании QR кода</string>
+    <string name="message_permission_denied">Разрешение нужно для сохранение QR кода</string>
+    <string name="message_save_completed">Сохранено:\n%1s</string>
+    <string name="message_save_error">Ошибка при сохранении файла</string>
+    <string name="message_copied_ssid">SSID скопирован в буфер обмена</string>
+    <string name="preference_ad_title">Показывать рекламу</string>
+    <string name="preference_ad_enabled">Реклама включена :)</string>
+    <string name="preference_ad_disabled">Реклама выключена :(</string>
+</resources>
