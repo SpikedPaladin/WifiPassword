@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
     private WifiAdapter adapter;
     private long backPressTime;
     RecyclerView list;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,30 +84,28 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
     }
     
     private boolean hasRoot() {
-        boolean root = false;
+        boolean root;
         Process suProcess;
         try {
             suProcess = Runtime.getRuntime().exec("su");
             DataOutputStream os = new DataOutputStream(suProcess.getOutputStream());
             DataInputStream osRes = new DataInputStream(suProcess.getInputStream());
-            if (os != null && osRes != null) {
-                os.writeBytes("id\n");
+            os.writeBytes("id\n");
+            os.flush();
+            String currUid = osRes.readLine();
+            boolean exitSu = false;
+            if (currUid == null) {
+                root = false;
+            } else if (currUid.contains("uid=0")) {
+                root = true;
+                exitSu = true;
+            } else {
+                root = false;
+                exitSu = true;
+            }
+            if (exitSu) {
+                os.writeBytes("exit\n");
                 os.flush();
-                String currUid = osRes.readLine();
-                boolean exitSu = false;
-                if (currUid == null) {
-                    root = false;
-                } else if (currUid.contains("uid=0")) {
-                    root = true;
-                    exitSu = true;
-                } else {
-                    root = false;
-                    exitSu = true;
-                }
-                if (exitSu) {
-                    os.writeBytes("exit\n");
-                    os.flush();
-                }
             }
         } catch (IOException e) {
             root = false;
@@ -170,14 +168,14 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
                         }
                     }
                 }
-                NodeList listEnterprice = ((Element) net).getElementsByTagName("WifiEnterpriseConfiguration");
-                for (int i = 0; i < listEnterprice.getLength(); i++) {
-                    Node nodeEnterprice = listEnterprice.item(i);
-                    if (nodeEnterprice.getNodeType() == Node.ELEMENT_NODE) {
-                        String user = getNodeValueByAttribute(nodeEnterprice, "string", "Identity");
+                NodeList listEnterprise = ((Element) net).getElementsByTagName("WifiEnterpriseConfiguration");
+                for (int i = 0; i < listEnterprise.getLength(); i++) {
+                    Node nodeEnterprise = listEnterprise.item(i);
+                    if (nodeEnterprise.getNodeType() == Node.ELEMENT_NODE) {
+                        String user = getNodeValueByAttribute(nodeEnterprise, "string", "Identity");
                         user = user.substring(1, user.length() - 1);
                         currWifi.setUser(user);
-                        String key = getNodeValueByAttribute(nodeEnterprice, "string", "Password");
+                        String key = getNodeValueByAttribute(nodeEnterprise, "string", "Password");
                         key = key.substring(1, key.length() - 1);
                         currWifi.setPassword(key);
                         currWifi.setType(WifiItem.TYPE_ENTERPRISE);
@@ -285,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-        
+            
             public boolean onQueryTextChange(String newText) {
                 adapter.getFilter().filter(newText);
                 return true;
@@ -306,12 +304,12 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
         }
         return super.onOptionsItemSelected(item);
     }
-
+    
     @Override
     public void onItemClick(View view, int position) {
         wifiDialog.show(getSupportFragmentManager(), adapter.getItem(position), codeDialog);
     }
-
+    
     @Override
     public void onBackPressed() {
         if (preferences != null && preferences.getBoolean("back_pressed_enabled", true)) {
