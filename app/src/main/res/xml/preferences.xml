@@ -30,4 +30,24 @@
         
     </PreferenceCategory>
     
+    <PreferenceCategory
+        android:title="@string/preference_category_search">
+        
+        <SwitchPreference
+            android:key="search_enabled"
+            android:defaultValue="true"
+            android:title="@string/preference_password_search_title"
+            android:summaryOn="@string/preference_password_search_enabled"
+            android:summaryOff="@string/preference_password_search_disabled"/>
+        
+        <CheckBoxPreference
+            android:dependency="search_enabled"
+            android:key="password_search_enabled"
+            android:defaultValue="false"
+            android:title="@string/preference_password_search_title"
+            android:summaryOn="@string/preference_password_search_enabled"
+            android:summaryOff="@string/preference_password_search_disabled"/>
+        
+    </PreferenceCategory>
+    
 </PreferenceScreen>

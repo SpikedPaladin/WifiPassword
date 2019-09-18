@@ -277,7 +277,10 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_toolbar, menu);
         MenuItem item = menu.findItem(R.id.item_main_search);
-        // TODO Search preference
+        if (preferences != null && !preferences.getBoolean("search_enabled", true)) {
+            item.setVisible(false);
+            return true;
+        }
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             public boolean onQueryTextSubmit(String query) {

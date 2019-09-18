@@ -92,6 +92,8 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
     
     public Filter getFilter() {
         return new Filter() {
+            
+            @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String charString = charSequence.toString();
                 if (charString.isEmpty()) {
@@ -99,11 +101,8 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
                 } else {
                     ArrayList<WifiItem> filteredList = new ArrayList<>();
                     for (WifiItem item : data) {
-                        /*SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-                        if (item.getSsid().toLowerCase().contains(charString) || (pref.getBoolean("search_password", false) && item.getPassword().toLowerCase().contains(charString))) {
-                            filteredList.add(item);
-                        }*/
-                        if (item.getSsid().toLowerCase().contains(charString)) {
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+                        if (item.getSsid().toLowerCase().contains(charString) || (preferences != null && preferences.getBoolean("password_search_enabled", false) && item.getPassword().toLowerCase().contains(charString))) {
                             filteredList.add(item);
                         }
                     }
@@ -114,6 +113,7 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
                 return filterResults;
             }
             
+            @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 filteredData = (ArrayList<WifiItem>) filterResults.values;
                 notifyDataSetChanged();

@@ -28,7 +28,7 @@
     <string name="description_code">QR Код</string>
     <string name="message_copied_password">Пароль скопирован в буфер обмена</string>
     <string name="action_save">Сохранить</string>
-    <string name="message_interprice_error">WPA Enterprise не поддерживается</string>
+    <string name="message_enterprise_error">WPA Enterprise не поддерживается</string>
     <string name="message_code_error">Ошибка при создании QR кода</string>
     <string name="message_permission_denied">Разрешение нужно для сохранение QR кода</string>
     <string name="message_save_completed">Сохранено:\n%1s</string>
@@ -37,4 +37,12 @@
     <string name="preference_ad_title">Показывать рекламу</string>
     <string name="preference_ad_enabled">Реклама включена :)</string>
     <string name="preference_ad_disabled">Реклама выключена :(</string>
+    <string name="preference_category_search">Поиск</string>
+    <string name="preference_search_title">Кнопка поиска</string>
+    <string name="preference_search_enabled">Кнопка поиска отображается</string>
+    <string name="preference_search_disabled">Кнопка поиска не отображается</string>
+    <string name="preference_password_search_title">Поиск по паролю</string>
+    <string name="preference_password_search_enabled">Поиск по паролю включен</string>
+    <string name="preference_password_search_disabled">Поиск по паролю отключен</string>
+    
 </resources>

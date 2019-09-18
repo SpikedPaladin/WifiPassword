@@ -62,7 +62,7 @@ public class CodeDialog extends AppCompatDialogFragment implements View.OnClickL
         } else if (wifi.getType().equals(WifiItem.TYPE_ENTERPRISE)) {
             wifiTyp = "WPA";
             wifiUser = "U:" + qrEncode(wifi.getUser());
-            warn.setText(R.string.message_interprice_error);
+            warn.setText(R.string.message_enterprise_error);
             warn.setVisibility(View.VISIBLE);
         }
         String wifiText = "WIFI:T:" + qrEncode(wifiTyp) + ";S:" + qrEncode(wifi.getSsid()) + ";P:" + qrEncode(wifi.getPassword()) + ";" + wifiUser + ";";

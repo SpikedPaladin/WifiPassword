@@ -34,7 +34,7 @@
     <string name="description_code">QR Code</string>
     <string name="message_copied_password">Password copied to clipboard</string>
     <string name="action_save">Save</string>
-    <string name="message_interprice_error">WPA Enterprise is not supported</string>
+    <string name="message_enterprise_error">WPA Enterprise is not supported</string>
     <string name="message_code_error">Error creating QR code</string>
     <string name="message_permission_denied">Permission is needed to save QR code</string>
     <string name="message_save_completed">Saved to:\n%1s</string>
@@ -43,6 +43,12 @@
     <string name="preference_ad_title">Show ads</string>
     <string name="preference_ad_enabled">Ads are enabled :)</string>
     <string name="preference_ad_disabled">Ads are disabled :(</string>
-
-
+    <string name="preference_category_search">Search</string>
+    <string name="preference_search_title">Search button</string>
+    <string name="preference_search_enabled">Search button is displayed</string>
+    <string name="preference_search_disabled">Search button not showing</string>
+    <string name="preference_password_search_title">Password search</string>
+    <string name="preference_password_search_enabled">Search passwords enabled</string>
+    <string name="preference_password_search_disabled">Search passwords disabled</string>
+    
 </resources>
