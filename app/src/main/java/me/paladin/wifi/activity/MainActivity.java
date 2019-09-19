@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
     private ExitDialog exitDialog;
     private WifiAdapter adapter;
     private long backPressTime;
+    LinearLayout errorLayout;
     RecyclerView list;
     
     @Override
@@ -60,15 +62,15 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        // TODO Ads settings
         AdView banner = findViewById(R.id.mainBanner);
+        errorLayout = findViewById(R.id.mainError);
+        list = findViewById(R.id.mainList);
         if (preferences != null && !preferences.getBoolean("ad_enabled", true)) {
             banner.setVisibility(View.GONE);
         } else {
             AdRequest request = new AdRequest.Builder().build();
             banner.loadAd(request);
         }
-        list = findViewById(R.id.mainList);
         list.setLayoutManager(new LinearLayoutManager(this));
         list.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         adapter = new WifiAdapter(this);
@@ -81,6 +83,12 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
         wifiDialog = new WifiDialog(this);
         codeDialog = new CodeDialog(this);
         exitDialog = new ExitDialog(this);
+        if (hasRoot()) {
+            loadAdapter();
+        } else {
+            errorLayout.setVisibility(View.VISIBLE);
+            list.setVisibility(View.GONE);
+        }
     }
     
     private boolean hasRoot() {

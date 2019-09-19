@@ -50,5 +50,7 @@
     <string name="preference_password_search_title">Password search</string>
     <string name="preference_password_search_enabled">Search passwords enabled</string>
     <string name="preference_password_search_disabled">Search passwords disabled</string>
-    
+    <string name="message_root_error">Error</string>
+    <string name="message_root_error_description">This app requires root to work</string>
+
 </resources>

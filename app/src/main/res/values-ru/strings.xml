@@ -44,5 +44,7 @@
     <string name="preference_password_search_title">Поиск по паролю</string>
     <string name="preference_password_search_enabled">Поиск по паролю включен</string>
     <string name="preference_password_search_disabled">Поиск по паролю отключен</string>
-    
+    <string name="message_root_error">Ошибка</string>
+    <string name="message_root_error_description">Этому приложению нужны рут права для работы</string>
+
 </resources>
