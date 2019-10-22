@@ -75,9 +75,6 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
         list.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         adapter = new WifiAdapter(this);
         adapter.setClickListener(this);
-        adapter.addItem(new WifiItem("Cafe Wifi", "394FURBdhd"));
-        adapter.addItem(new WifiItem("Impossible Password", "00000000"));
-        adapter.addItem(new WifiItem("Laptop 1", "ywn62;hso"));
         list.setAdapter(adapter);
         backPressTime = System.currentTimeMillis() - 2000;
         wifiDialog = new WifiDialog(this);
@@ -179,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
                 NodeList listEnterprise = ((Element) net).getElementsByTagName("WifiEnterpriseConfiguration");
                 for (int i = 0; i < listEnterprise.getLength(); i++) {
                     Node nodeEnterprise = listEnterprise.item(i);
-                    if (nodeEnterprise.getNodeType() == Node.ELEMENT_NODE) {
+                    if (nodeEnterprise.getNodeType() == Node.ELEMENT_NODE && currWifi != null) {
                         String user = getNodeValueByAttribute(nodeEnterprise, "string", "Identity");
                         user = user.substring(1, user.length() - 1);
                         currWifi.setUser(user);
@@ -289,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
             item.setVisible(false);
             return true;
         }
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             public boolean onQueryTextSubmit(String query) {
                 return false;

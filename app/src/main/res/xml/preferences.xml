@@ -36,9 +36,9 @@
         <SwitchPreference
             android:key="search_enabled"
             android:defaultValue="true"
-            android:title="@string/preference_password_search_title"
-            android:summaryOn="@string/preference_password_search_enabled"
-            android:summaryOff="@string/preference_password_search_disabled"/>
+            android:title="@string/preference_search_title"
+            android:summaryOn="@string/preference_search_enabled"
+            android:summaryOff="@string/preference_search_disabled"/>
         
         <CheckBoxPreference
             android:dependency="search_enabled"

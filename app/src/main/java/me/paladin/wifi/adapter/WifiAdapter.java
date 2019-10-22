@@ -125,7 +125,7 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
         TextView ssid, password, user, type;
         ImageView image;
         
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
             ssid = itemView.findViewById(R.id.adapterSSID);
             password = itemView.findViewById(R.id.adapterPassword);

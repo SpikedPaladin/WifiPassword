@@ -40,6 +40,17 @@ public class WifiItem implements Serializable {
         return password;
     }
     
+    public String getProtectedPassword() {
+        if (password == null) {
+            return "";
+        }
+        StringBuilder password = new StringBuilder();
+        for (int i = 0; i < getPassword().length(); i++) {
+            password.append("*");
+        }
+        return password.toString();
+    }
+    
     public void setPassword(String password) {
         this.password = password;
     }
