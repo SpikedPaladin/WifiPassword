@@ -15,7 +15,6 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import me.paladin.wifi.R;
 import me.paladin.wifi.adapter.item.WifiItem;
@@ -43,29 +42,25 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         WifiItem item = getItem(position);
         holder.ssid.setText(item.getSsid());
-        /*SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         if (pref.getBoolean("show_passwords", true)) {
             holder.password.setText(item.getPassword());
         } else {
-            String password = "";
-            for (int i = 0; i < item.getPassword().length(); i++) {
-                password = password + "*";
-            }
-            holder.password.setText(password);
-        }*/
-        holder.password.setText(item.getPassword());
+            holder.password.setText(item.getProtectedPassword());
+        }
         holder.type.setText(item.getType());
         if (item.getPassword().length() <= 0) {
             holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_wifi));
         }
         if (item.getUser().length() > 0) {
-            String begin = "";
+            StringBuilder user = new StringBuilder();
             if (item.getType().equals(WifiItem.TYPE_ENTERPRISE)) {
-                begin = "User: ";
+                user.append("User: ");
             } else if (item.getType().equals(WifiItem.TYPE_WEP)) {
-                begin = "Keyindex: ";
+                user.append("Keyindex: ");
             }
-            holder.user.setText(begin + item.getUser());
+            user.append(item.getUser());
+            holder.user.setText(user.toString());
             holder.user.setVisibility(TextView.VISIBLE);
         } else {
             holder.user.setVisibility(TextView.GONE);

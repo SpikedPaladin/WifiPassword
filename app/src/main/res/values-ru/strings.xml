@@ -46,5 +46,7 @@
     <string name="preference_password_search_disabled">Поиск по паролю отключен</string>
     <string name="message_root_error">Ошибка</string>
     <string name="message_root_error_description">Этому приложению нужны рут права для работы</string>
+    <string name="preference_category_security">Безопасность</string>
+    <string name="action_refresh">" Обновить"</string>
 
 </resources>

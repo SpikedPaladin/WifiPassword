@@ -11,6 +11,12 @@
         app:showAsAction="ifRoom|collapseActionView"/>
     
     <item
+        android:id="@+id/item_main_refresh"
+        android:icon="@drawable/ic_refresh"
+        android:title="@string/action_refresh"
+        app:showAsAction="always"/>
+    
+    <item
         android:id="@+id/item_main_settings"
         android:title="@string/action_settings"
         app:showAsAction="never"/>
