@@ -56,9 +56,9 @@
         <CheckBoxPreference
             android:key="show_passwords"
             android:defaultValue="true"
-            android:title="Показывать пароли в списке"
-            android:summaryOn="Показывать"
-            android:summaryOff="Не показывать"/>
+            android:title="@string/preference_passwords_security_title"
+            android:summaryOn="@string/preference_passwords_security_enabled"
+            android:summaryOff="@string/preference_passwords_security_disabled"/>
         
     </PreferenceCategory>
     

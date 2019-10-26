@@ -1,15 +1,19 @@
 package me.paladin.wifi.activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.view.MenuItemCompat;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,22 +58,27 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
     private ExitDialog exitDialog;
     private WifiAdapter adapter;
     private long backPressTime;
+    private boolean adLoaded;
     LinearLayout errorLayout;
+    MenuItem searchItem;
     RecyclerView list;
+    AdView banner;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        AdView banner = findViewById(R.id.mainBanner);
+        banner = findViewById(R.id.mainBanner);
         errorLayout = findViewById(R.id.mainError);
         list = findViewById(R.id.mainList);
         if (preferences != null && !preferences.getBoolean("ad_enabled", true)) {
             banner.setVisibility(View.GONE);
+            adLoaded = false;
         } else {
             AdRequest request = new AdRequest.Builder().build();
             banner.loadAd(request);
+            adLoaded = true;
         }
         list.setLayoutManager(new LinearLayoutManager(this));
         list.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -88,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
         }
     }
     
+    @SuppressWarnings("deprecation")
     private boolean hasRoot() {
         boolean root;
         Process suProcess;
@@ -118,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
         return root;
     }
     
+    @SuppressWarnings("IfCanBeSwitch")
     private void loadAdapter() {
         adapter.clear();
         adapter.notifyDataSetChanged();
@@ -280,13 +291,16 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if (menu instanceof MenuBuilder) {
+            ((MenuBuilder) menu).setOptionalIconsVisible(true);
+        }
         getMenuInflater().inflate(R.menu.menu_main_toolbar, menu);
-        MenuItem item = menu.findItem(R.id.item_main_search);
+        searchItem = menu.findItem(R.id.item_main_search);
         if (preferences != null && !preferences.getBoolean("search_enabled", true)) {
-            item.setVisible(false);
+            searchItem.setVisible(false);
             return true;
         }
-        SearchView searchView = (SearchView) item.getActionView();
+        SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -303,14 +317,74 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.item_main_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+        if (id == R.id.item_main_refresh) {
+            if (hasRoot() && list.getVisibility() == View.VISIBLE) {
+                loadAdapter();
+            } else if (hasRoot() && list.getVisibility() == View.GONE) {
+                errorLayout.setVisibility(View.GONE);
+                list.setVisibility(View.VISIBLE);
+                loadAdapter();
+            }
+        } else if (id == R.id.item_main_settings) {
+            startActivityForResult(new Intent(this, SettingsActivity.class), 1);
+        } else if (id == R.id.item_main_share) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name);
+            intent.putExtra(Intent.EXTRA_TEXT, "http://play.google.com/store/apps/details?id=" + getPackageName());
+            startActivity(Intent.createChooser(intent, getString(R.string.action_share)));
         } else if (id == R.id.item_main_about) {
             startActivity(new Intent(this, AboutActivity.class));
+        } else if (id == R.id.item_main_rate) {
+            Uri uri = Uri.parse("market://details?id=" + getPackageName());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            int flags = Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK;
+            if (Build.VERSION.SDK_INT >= 21)
+                flags |= Intent.FLAG_ACTIVITY_NEW_DOCUMENT;
+            else
+                flags |= Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET;
+            intent.addFlags(flags);
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException ex) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
+            }
         } else if (id == R.id.item_main_exit) {
             exitDialog.show(getSupportFragmentManager());
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            if (data.getBooleanExtra("ads", false)) {
+                if (banner.getVisibility() == View.VISIBLE) {
+                    banner.pause();
+                    banner.setVisibility(View.GONE);
+                } else if (banner.getVisibility() == View.GONE && adLoaded) {
+                    banner.resume();
+                    banner.setVisibility(View.VISIBLE);
+                } else if (banner.getVisibility() == View.GONE && !adLoaded) {
+                    banner.resume();
+                    banner.setVisibility(View.VISIBLE);
+                    AdRequest request = new AdRequest.Builder().build();
+                    banner.loadAd(request);
+                    adLoaded = true;
+                }
+            }
+            if (data.getBooleanExtra("search", false)) {
+                if (searchItem.isVisible()) {
+                    searchItem.setVisible(false);
+                } else {
+                    searchItem.setVisible(true);
+                }
+            }
+            if (data.getBooleanExtra("pass", false)) {
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
     
     @Override
@@ -332,5 +406,29 @@ public class MainActivity extends AppCompatActivity implements WifiAdapter.ItemC
             }
         }
         super.onBackPressed();
+    }
+    
+    @Override
+    protected void onPause() {
+        if (banner != null) {
+            banner.pause();
+        }
+        super.onPause();
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (banner != null) {
+            banner.resume();
+        }
+    }
+    
+    @Override
+    protected void onDestroy() {
+        if (banner != null) {
+            banner.destroy();
+        }
+        super.onDestroy();
     }
 }

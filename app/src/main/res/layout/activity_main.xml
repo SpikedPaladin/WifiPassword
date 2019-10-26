@@ -41,6 +41,7 @@
         android:layout_weight="1"
         android:scrollbars="vertical"/>
     
+    <!--Sample AdMob Banner ID: ca-app-pub-3940256099942544/6300978111-->
     <com.google.android.gms.ads.AdView
         android:id="@+id/mainBanner"
         android:layout_width="match_parent"

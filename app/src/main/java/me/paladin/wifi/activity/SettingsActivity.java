@@ -1,15 +1,20 @@
 package me.paladin.wifi.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 import me.paladin.wifi.R;
 
 public class SettingsActivity extends AppCompatActivity {
+    private boolean startAds, startSearch, startPass;
+    private SharedPreferences preferences;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +24,10 @@ public class SettingsActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.settings, new SettingsFragment())
                 .commit();
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        startAds = preferences.getBoolean("ad_enabled", true);
+        startSearch = preferences.getBoolean("search_enabled", true);
+        startPass = preferences.getBoolean("show_passwords", true);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -28,9 +37,27 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        if (startAds != preferences.getBoolean("ad_enabled", true)) {
+            intent.putExtra("ads", true);
+        }
+        if (startSearch != preferences.getBoolean("search_enabled", true)) {
+            intent.putExtra("search", true);
+        }
+        if (startPass != preferences.getBoolean("show_passwords", true)) {
+            intent.putExtra("pass", true);
+        }
+        if (intent.getExtras() != null) {
+            setResult(RESULT_OK, intent);
+        }
+        finish();
     }
     
     public static class SettingsFragment extends PreferenceFragmentCompat {

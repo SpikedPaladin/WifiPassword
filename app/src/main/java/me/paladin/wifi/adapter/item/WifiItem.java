@@ -14,14 +14,6 @@ public class WifiItem implements Serializable {
     public static String TYPE_WEP = "WEP";
     public static String TYPE_WPA = "WPA/WPA2";
     
-    public WifiItem() {}
-    
-    public WifiItem(String ssid, String password) {
-        this.ssid = ssid;
-        this.password = password;
-        this.type = TYPE_WPA;
-    }
-    
     public String getSsid() {
         if (ssid == null) {
             return "";

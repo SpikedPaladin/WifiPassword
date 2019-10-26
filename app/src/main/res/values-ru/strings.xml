@@ -47,6 +47,14 @@
     <string name="message_root_error">Ошибка</string>
     <string name="message_root_error_description">Этому приложению нужны рут права для работы</string>
     <string name="preference_category_security">Безопасность</string>
-    <string name="action_refresh">" Обновить"</string>
+    <string name="action_refresh">Обновить</string>
+    <string name="action_rate">Оценить</string>
+    <string name="description_ssid">Имя сети</string>
+    <string name="description_password">Пароль сети</string>
+    <string name="description_copy_password">Копировать пароль сети</string>
+    <string name="description_copy_ssid">Копировать имя сети</string>
+    <string name="preference_passwords_security_title">Безопасность паролей</string>
+    <string name="preference_passwords_security_enabled">Показывать пароли в списке</string>
+    <string name="preference_passwords_security_disabled">Спрятать пароли в списке</string>
 
 </resources>

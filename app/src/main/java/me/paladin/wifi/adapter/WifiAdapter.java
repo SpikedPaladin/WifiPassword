@@ -108,6 +108,7 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
                 return filterResults;
             }
             
+            @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 filteredData = (ArrayList<WifiItem>) filterResults.values;

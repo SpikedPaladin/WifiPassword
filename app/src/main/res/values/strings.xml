@@ -54,5 +54,13 @@
     <string name="message_root_error_description">This app requires root to work</string>
     <string name="preference_category_security">Security</string>
     <string name="action_refresh">Refresh</string>
+    <string name="action_rate">Rate</string>
+    <string name="description_ssid">Network name</string>
+    <string name="description_password">Network password</string>
+    <string name="description_copy_ssid">Copy network name</string>
+    <string name="description_copy_password">Copy network password</string>
+    <string name="preference_passwords_security_title">Passwords security</string>
+    <string name="preference_passwords_security_enabled">Show passwords in the list</string>
+    <string name="preference_passwords_security_disabled">Hide passwords in the list</string>
 
 </resources>
