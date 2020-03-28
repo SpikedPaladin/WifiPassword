@@ -7,10 +7,13 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
 import me.paladin.wifi.R;
+import me.paladin.wifi.util.ThemeUtil;
 
 public class SettingsActivity extends AppCompatActivity {
     private boolean startAds, startSearch, startPass;
@@ -57,13 +60,26 @@ public class SettingsActivity extends AppCompatActivity {
         if (intent.getExtras() != null) {
             setResult(RESULT_OK, intent);
         }
-        finish();
+        super.onBackPressed();
     }
     
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences, rootKey);
+    
+            ListPreference themeList = findPreference("application_theme");
+            if (themeList != null) {
+                themeList.setOnPreferenceChangeListener(
+                        new Preference.OnPreferenceChangeListener() {
+                            @Override
+                            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                                ThemeUtil.applyTheme((String) newValue);
+                                return true;
+                            }
+                        }
+                );
+            }
         }
     }
 }

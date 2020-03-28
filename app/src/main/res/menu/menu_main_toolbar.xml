@@ -20,30 +20,35 @@
         android:id="@+id/item_main_settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/action_settings"
+        app:iconTint="@color/colorMenuIcon"
         app:showAsAction="never"/>
     
     <item
         android:id="@+id/item_main_share"
         android:icon="@drawable/ic_share"
         android:title="@string/action_share"
+        app:iconTint="@color/colorMenuIcon"
         app:showAsAction="never"/>
     
     <item
         android:id="@+id/item_main_about"
         android:icon="@drawable/ic_about"
         android:title="@string/action_about"
+        app:iconTint="@color/colorMenuIcon"
         app:showAsAction="never"/>
     
     <item
         android:id="@+id/item_main_rate"
         android:icon="@drawable/ic_rate"
         android:title="@string/action_rate"
+        app:iconTint="@color/colorMenuIcon"
         app:showAsAction="never"/>
     
     <item
         android:id="@+id/item_main_exit"
         android:icon="@drawable/ic_exit"
         android:title="@string/dialog_exit_title"
+        app:iconTint="@color/colorMenuIcon"
         app:showAsAction="never"/>
     
 </menu>

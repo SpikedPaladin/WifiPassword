@@ -56,5 +56,10 @@
     <string name="preference_passwords_security_title">Безопасность паролей</string>
     <string name="preference_passwords_security_enabled">Показывать пароли в списке</string>
     <string name="preference_passwords_security_disabled">Спрятать пароли в списке</string>
+    <string name="preference_application_theme">Тема приложения</string>
+    <string name="array_theme_light">Светлая</string>
+    <string name="array_theme_dark">Темная</string>
+    <string name="array_theme_system">Тема системы</string>
+    <string name="array_theme_battery">Энергосберегающий режим</string>
 
 </resources>

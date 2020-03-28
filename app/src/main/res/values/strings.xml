@@ -62,5 +62,10 @@
     <string name="preference_passwords_security_title">Passwords security</string>
     <string name="preference_passwords_security_enabled">Show passwords in the list</string>
     <string name="preference_passwords_security_disabled">Hide passwords in the list</string>
+    <string name="preference_application_theme">Application theme</string>
+    <string name="array_theme_light">Light</string>
+    <string name="array_theme_dark">Dark</string>
+    <string name="array_theme_system">System theme</string>
+    <string name="array_theme_battery">Battery saver</string>
 
 </resources>

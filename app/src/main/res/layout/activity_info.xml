@@ -43,15 +43,16 @@
         android:paddingLeft="8dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="SSID"
         android:textIsSelectable="true"
         android:textSize="18sp"
         android:elevation="2dp"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/ssidImage"
         app:layout_constraintEnd_toStartOf="@+id/infoSSIDCopy"
         app:layout_constraintStart_toEndOf="@+id/ssidImage"
         app:layout_constraintTop_toTopOf="@+id/ssidImage"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="SSID"/>
     
     <TextView
         android:id="@+id/infoPassword"
@@ -66,14 +67,15 @@
         android:paddingLeft="8dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="Password"
         android:textIsSelectable="true"
         android:textSize="18sp"
         android:elevation="2dp"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/passwordImage"
         app:layout_constraintEnd_toStartOf="@+id/infoPasswordCopy"
         app:layout_constraintStart_toEndOf="@+id/passwordImage"
-        app:layout_constraintTop_toTopOf="@+id/passwordImage"/>
+        app:layout_constraintTop_toTopOf="@+id/passwordImage"
+        tools:text="Password"/>
     
     <ImageView
         android:id="@+id/infoSSIDCopy"

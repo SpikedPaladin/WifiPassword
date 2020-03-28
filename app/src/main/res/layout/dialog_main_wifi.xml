@@ -17,18 +17,20 @@
         android:focusable="true"
         android:padding="8dp"
         android:id="@+id/dialogWifiCopy">
-        
+    
         <ImageView
             android:layout_width="33dp"
             android:layout_height="33dp"
             android:layout_marginRight="6dp"
-            app:srcCompat="@drawable/ic_copy"
-            android:contentDescription="@string/action_copy"/>
-        
+            android:contentDescription="@string/action_copy"
+            android:tint="@color/colorMenuIcon"
+            app:srcCompat="@drawable/ic_copy"/>
+    
         <TextView
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/action_copy"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"/>
     
     </LinearLayout>
@@ -49,17 +51,19 @@
         android:focusable="true"
         android:padding="8dp"
         android:id="@+id/dialogWifiCode">
-        
+    
         <ImageView
             android:layout_width="33dp"
             android:layout_height="33dp"
             android:layout_marginRight="6dp"
-            app:srcCompat="@drawable/ic_qrcode" />
+            android:tint="@color/colorMenuIcon"
+            app:srcCompat="@drawable/ic_qrcode"/>
         
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/action_code"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"/>
     
     </LinearLayout>
@@ -80,17 +84,19 @@
         android:focusable="true"
         android:padding="8dp"
         android:id="@+id/dialogWifiOpen">
-        
+    
         <ImageView
             android:layout_width="33dp"
             android:layout_height="33dp"
             android:layout_marginRight="6dp"
+            android:tint="@color/colorMenuIcon"
             app:srcCompat="@drawable/ic_open"/>
         
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/action_info"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"/>
     
     </LinearLayout>
@@ -111,17 +117,19 @@
         android:focusable="true"
         android:padding="8dp"
         android:id="@+id/dialogWifiShare">
-        
+    
         <ImageView
             android:layout_width="33dp"
             android:layout_height="33dp"
             android:layout_marginRight="6dp"
+            android:tint="@color/colorMenuIcon"
             app:srcCompat="@drawable/ic_share"/>
         
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/action_share"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"/>
     
     </LinearLayout>

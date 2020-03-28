@@ -26,9 +26,9 @@
             android:paddingLeft="6dp"
             android:paddingTop="6dp"
             android:singleLine="true"
-            android:text="SSID"
-            android:textColor="#263238"
-            android:textSize="20sp" />
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="20sp"
+            tools:text="SSID"/>
     
         <TextView
             android:id="@+id/adapterUser"
@@ -37,10 +37,10 @@
             android:ellipsize="end"
             android:padding="6dp"
             android:singleLine="true"
-            android:text="User"
-            android:textColor="#263238"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="20sp"
-            tools:visibility="gone" />
+            tools:text="User"
+            tools:visibility="gone"/>
     
         <TextView
             android:id="@+id/adapterPassword"
@@ -50,9 +50,10 @@
             android:paddingLeft="6dp"
             android:paddingBottom="6dp"
             android:singleLine="true"
-            android:text="Password"
-            android:textColor="#607D8B"
-            android:textSize="14sp" />
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp"
+            tools:text="Password"/>
+        
     </LinearLayout>
     
     <LinearLayout
@@ -67,14 +68,16 @@
             android:id="@+id/adapterImage"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            app:srcCompat="@drawable/ic_wifi_lock" />
+            app:srcCompat="@drawable/ic_wifi_lock"/>
     
         <TextView
             android:id="@+id/adapterType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WPA/WPA2"
-            android:textColor="#263238"
-            android:textSize="14sp" />
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp"
+            tools:text="WPA/WPA2"/>
+        
     </LinearLayout>
+    
 </LinearLayout>

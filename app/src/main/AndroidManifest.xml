@@ -25,22 +25,18 @@
         
         <activity
             android:name=".activity.InfoActivity"
-            android:label="@string/action_info"
-            android:configChanges="orientation|screenSize"/>
+            android:label="@string/action_info"/>
         
         <activity
             android:name=".activity.SettingsActivity"
-            android:label="@string/action_settings"
-            android:configChanges="orientation|screenSize"/>
+            android:label="@string/action_settings"/>
         
         <activity
             android:name=".activity.AboutActivity"
-            android:label="@string/action_about"
-            android:configChanges="orientation|screenSize"/>
+            android:label="@string/action_about"/>
         
         <activity
-            android:name=".activity.MainActivity"
-            android:configChanges="orientation|screenSize">
+            android:name=".activity.MainActivity">
             
             <intent-filter>
                 

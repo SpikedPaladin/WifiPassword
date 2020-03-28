@@ -17,10 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.PermissionChecker;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.zxing.BarcodeFormat;
@@ -31,16 +32,21 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import me.paladin.wifi.R;
-import me.paladin.wifi.adapter.item.WifiItem;
+import me.paladin.wifi.model.WifiItem;
 
-public class CodeDialog extends AppCompatDialogFragment implements View.OnClickListener, DialogInterface.OnShowListener {
+public class CodeDialog extends DialogFragment implements View.OnClickListener, DialogInterface.OnShowListener {
     private AlertDialog dialog;
     private Activity activity;
-    private WifiItem wifi;
+    private WifiItem item;
     private Bitmap bitmap;
     
-    public CodeDialog(Activity activity) {
-        this.activity = activity;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        activity = getActivity();
+        if (savedInstanceState != null) {
+            item = savedInstanceState.getParcelable("item");
+        }
     }
     
     @NonNull
@@ -55,17 +61,17 @@ public class CodeDialog extends AppCompatDialogFragment implements View.OnClickL
         // WIFI:T:WPA;S:network;P:password;;
         String wifiUser = "";
         String wifiTyp = "WEP";
-        if (wifi.getType().equals(WifiItem.TYPE_WEP)) {
+        if (item.getType().equals(WifiItem.TYPE_WEP)) {
             wifiTyp = "WEP";
-        } else if (wifi.getType().equals(WifiItem.TYPE_WPA)) {
+        } else if (item.getType().equals(WifiItem.TYPE_WPA)) {
             wifiTyp = "WPA";
-        } else if (wifi.getType().equals(WifiItem.TYPE_ENTERPRISE)) {
+        } else if (item.getType().equals(WifiItem.TYPE_ENTERPRISE)) {
             wifiTyp = "WPA";
-            wifiUser = "U:" + qrEncode(wifi.getUser());
+            wifiUser = "U:" + qrEncode(item.getUser());
             warn.setText(R.string.message_enterprise_error);
             warn.setVisibility(View.VISIBLE);
         }
-        String wifiText = "WIFI:T:" + qrEncode(wifiTyp) + ";S:" + qrEncode(wifi.getSsid()) + ";P:" + qrEncode(wifi.getPassword()) + ";" + wifiUser + ";";
+        String wifiText = "WIFI:T:" + qrEncode(wifiTyp) + ";S:" + qrEncode(item.getSsid()) + ";P:" + qrEncode(item.getPassword()) + ";" + wifiUser + ";";
         bitmap = encodeAsBitmap(wifiText);
         if (bitmap != null) {
             code.setImageBitmap(bitmap);
@@ -74,7 +80,7 @@ public class CodeDialog extends AppCompatDialogFragment implements View.OnClickL
             warn.setVisibility(View.VISIBLE);
         }
         builder.setView(view);
-        builder.setTitle(wifi.getSsid());
+        builder.setTitle(item.getSsid());
         builder.setPositiveButton(R.string.action_save, null);
         builder.setNegativeButton(R.string.action_cancel, null);
         dialog = builder.create();
@@ -147,7 +153,7 @@ public class CodeDialog extends AppCompatDialogFragment implements View.OnClickL
                 Toast.makeText(getActivity(), R.string.message_save_error, Toast.LENGTH_LONG).show();
                 return;
             }
-            String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Wifi Password/" + wifi.getSsid().replaceAll("/", " ") + ".png";
+            String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Wifi Password/" + item.getSsid().replaceAll("/", " ") + ".png";
             FileOutputStream out = new FileOutputStream(dir);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.close();
@@ -172,6 +178,12 @@ public class CodeDialog extends AppCompatDialogFragment implements View.OnClickL
     }
     
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("item", item);
+    }
+    
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults.length <= 0 || grantResults[0] != PermissionChecker.PERMISSION_GRANTED) {
             Toast.makeText(getContext(), R.string.message_permission_denied, Toast.LENGTH_SHORT).show();
@@ -180,8 +192,8 @@ public class CodeDialog extends AppCompatDialogFragment implements View.OnClickL
         saveCode();
     }
     
-    public void show(FragmentManager manager, WifiItem wifi) {
-        this.wifi = wifi;
+    void show(FragmentManager manager, WifiItem item) {
+        this.item = item;
         show(manager, "CodeDialog");
     }
 }

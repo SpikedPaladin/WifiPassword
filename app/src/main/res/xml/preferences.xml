@@ -1,5 +1,6 @@
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     
     <PreferenceCategory
         android:title="@string/preference_category_general">
@@ -20,6 +21,15 @@
             android:entryValues="@array/back_values"
             android:summary="@string/preference_confirm_action_summary"
             android:title="@string/preference_confirm_action"/>
+        
+        <ListPreference
+            android:defaultValue="system"
+            android:key="application_theme"
+            android:dialogTitle="@string/preference_application_theme"
+            android:entries="@array/theme_entries"
+            android:entryValues="@array/theme_values"
+            android:title="@string/preference_application_theme"
+            app:useSimpleSummaryProvider="true"/>
         
         <CheckBoxPreference
             android:key="ad_enabled"

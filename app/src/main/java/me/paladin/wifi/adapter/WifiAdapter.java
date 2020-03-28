@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import me.paladin.wifi.R;
-import me.paladin.wifi.adapter.item.WifiItem;
+import me.paladin.wifi.model.WifiItem;
 
 public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
     private ArrayList<WifiItem> filteredData, data;
@@ -76,10 +76,16 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
         return filteredData.get(position);
     }
     
+    public void setItems(ArrayList<WifiItem> items) {
+        data = items;
+        filteredData = data;
+    }
+    
     public void addItem(WifiItem item) {
         data.add(item);
         filteredData = data;
     }
+    
     public void clear() {
         data = new ArrayList<>();
         filteredData = data;

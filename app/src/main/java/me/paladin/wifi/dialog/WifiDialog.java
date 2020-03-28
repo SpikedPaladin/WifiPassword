@@ -16,21 +16,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import me.paladin.wifi.R;
 import me.paladin.wifi.activity.InfoActivity;
-import me.paladin.wifi.adapter.item.WifiItem;
+import me.paladin.wifi.model.WifiItem;
 
-public class WifiDialog extends AppCompatDialogFragment implements View.OnClickListener {
-    private FragmentManager manager;
-    private CodeDialog codeDialog;
+public class WifiDialog extends DialogFragment implements View.OnClickListener {
     private Activity activity;
     private WifiItem item;
     
-    public WifiDialog(Activity activity) {
-        this.activity = activity;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        activity = getActivity();
+        if (savedInstanceState != null) {
+            item = savedInstanceState.getParcelable("item");
+        }
     }
     
     @NonNull
@@ -62,13 +65,13 @@ public class WifiDialog extends AppCompatDialogFragment implements View.OnClickL
             ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("Password", item.getPassword());
             clipboard.setPrimaryClip(clip);
-            Toast.makeText(getActivity(), R.string.message_copied_password, Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, R.string.message_copied_password, Toast.LENGTH_SHORT).show();
             dismiss();
         } else if (id == R.id.dialogWifiCode) {
-            codeDialog.show(manager, item);
+            new CodeDialog().show(getFragmentManager(), item);
             dismiss();
         } else if (id == R.id.dialogWifiOpen) {
-            Intent intent = new Intent(getActivity(), InfoActivity.class);
+            Intent intent = new Intent(activity, InfoActivity.class);
             intent.putExtra("item", item);
             activity.startActivity(intent);
             dismiss();
@@ -84,11 +87,15 @@ public class WifiDialog extends AppCompatDialogFragment implements View.OnClickL
         }
     }
     
-    public void show(FragmentManager manager, WifiItem item, CodeDialog codeDialog) {
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("item", item);
+    }
+    
+    public void show(FragmentManager manager, WifiItem item) {
         if (!isAdded()) {
             this.item = item;
-            this.manager = manager;
-            this.codeDialog = codeDialog;
             show(manager, "WifiDialog");
         }
     }

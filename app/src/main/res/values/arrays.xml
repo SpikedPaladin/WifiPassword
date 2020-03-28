@@ -10,4 +10,18 @@
         <item>press</item>
     </string-array>
     
+    <string-array name="theme_entries">
+        <item>@string/array_theme_light</item>
+        <item>@string/array_theme_dark</item>
+        <item>@string/array_theme_battery</item>
+        <item>@string/array_theme_system</item>
+    </string-array>
+    
+    <string-array name="theme_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>battery</item>
+        <item>system</item>
+    </string-array>
+    
 </resources>

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import me.paladin.wifi.R;
-import me.paladin.wifi.adapter.item.WifiItem;
+import me.paladin.wifi.model.WifiItem;
 
 public class InfoActivity extends AppCompatActivity {
     private WifiItem item;
@@ -27,7 +27,7 @@ public class InfoActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        item = (WifiItem) getIntent().getSerializableExtra("item");
+        item = getIntent().getParcelableExtra("item");
         TextView ssidText, passwordText;
         ssidText = findViewById(R.id.infoSSID);
         passwordText = findViewById(R.id.infoPassword);
