@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    
+    <style name="AppTheme" parent="Base.AppTheme"/>
+    
+    <style name="Base.AppTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/colorToolbarLight</item>
+        <item name="colorPrimaryDark">@color/colorStatusBarLight</item>
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorSecondaryVariant">@color/colorAccentDark</item>
+        <item name="android:colorBackground">@color/colorBackgroundLight</item>
+        <item name="colorSurface">@color/white_50</item>
+        <item name="colorError">@color/colorErrorLight</item>
+        <item name="colorOnPrimary">@color/white_50</item>
+        <item name="colorOnSecondary">@color/white_50</item>
+        <item name="colorOnBackground">@color/black_900</item>
+        <item name="colorOnSurface">@color/black_900</item>
+        <item name="colorOnError">@color/white_50</item>
+        <item name="borderlessButtonStyle">@style/AppTheme.TextButton</item>
+        <item name="actionBarStyle">@style/AppTheme.ActionBar</item>
+        <item name="alertDialogTheme">@style/AppTheme.Dialog</item>
+        <item name="android:colorEdgeEffect" tools:targetApi="lollipop">?colorSecondary</item>
+    </style>
+    
+</resources>

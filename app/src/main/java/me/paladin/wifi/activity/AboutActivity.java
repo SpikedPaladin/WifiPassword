@@ -3,15 +3,14 @@ package me.paladin.wifi.activity;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import me.paladin.wifi.BuildConfig;
 import me.paladin.wifi.R;
 
 public class AboutActivity extends AppCompatActivity {
@@ -24,6 +23,7 @@ public class AboutActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        ((TextView) findViewById(R.id.about_version)).setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
     }
     
     @Override
@@ -36,15 +36,10 @@ public class AboutActivity extends AppCompatActivity {
     
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.aboutGithub) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/SpikedPaladin")));
-        } else if (id == R.id.aboutVk) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/paladingames")));
-        } else if (id == R.id.aboutDiscord) {
-            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-            ClipData clipData = ClipData.newPlainText("Tag", "Paladin#3107");
-            clipboardManager.setPrimaryClip(clipData);
-            Toast.makeText(this, R.string.message_copied_tag, Toast.LENGTH_SHORT).show();
+        if (id == R.id.about_github) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/SpikedPaladin/WifiPassword")));
+        } else if (id == R.id.about_telegram) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/PaladinDev")));
         }
     }
 }

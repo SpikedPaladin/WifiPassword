@@ -32,12 +32,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import me.paladin.wifi.R;
-import me.paladin.wifi.model.WifiItem;
+import me.paladin.wifi.model.WifiModel;
 
 public class CodeDialog extends DialogFragment implements View.OnClickListener, DialogInterface.OnShowListener {
     private AlertDialog dialog;
     private Activity activity;
-    private WifiItem item;
+    private WifiModel item;
     private Bitmap bitmap;
     
     @Override
@@ -61,11 +61,11 @@ public class CodeDialog extends DialogFragment implements View.OnClickListener, 
         // WIFI:T:WPA;S:network;P:password;;
         String wifiUser = "";
         String wifiTyp = "WEP";
-        if (item.getType().equals(WifiItem.TYPE_WEP)) {
+        if (item.getType().equals(WifiModel.TYPE_WEP)) {
             wifiTyp = "WEP";
-        } else if (item.getType().equals(WifiItem.TYPE_WPA)) {
+        } else if (item.getType().equals(WifiModel.TYPE_WPA)) {
             wifiTyp = "WPA";
-        } else if (item.getType().equals(WifiItem.TYPE_ENTERPRISE)) {
+        } else if (item.getType().equals(WifiModel.TYPE_ENTERPRISE)) {
             wifiTyp = "WPA";
             wifiUser = "U:" + qrEncode(item.getUser());
             warn.setText(R.string.message_enterprise_error);
@@ -84,10 +84,6 @@ public class CodeDialog extends DialogFragment implements View.OnClickListener, 
         builder.setPositiveButton(R.string.action_save, null);
         builder.setNegativeButton(R.string.action_cancel, null);
         dialog = builder.create();
-        Window window = dialog.getWindow();
-        if (window != null) {
-            window.getAttributes().windowAnimations = R.style.AppTheme_Dialog;
-        }
         dialog.setOnShowListener(this);
         return dialog;
     }
@@ -164,6 +160,7 @@ public class CodeDialog extends DialogFragment implements View.OnClickListener, 
         }
     }
     
+    @Override
     public void onClick(View view) {
         if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED) {
             saveCode();
@@ -192,7 +189,7 @@ public class CodeDialog extends DialogFragment implements View.OnClickListener, 
         saveCode();
     }
     
-    void show(FragmentManager manager, WifiItem item) {
+    public void show(FragmentManager manager, WifiModel item) {
         this.item = item;
         show(manager, "CodeDialog");
     }

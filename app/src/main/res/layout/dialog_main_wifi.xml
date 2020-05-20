@@ -15,15 +15,14 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:padding="8dp"
         android:id="@+id/dialogWifiCopy">
     
         <ImageView
-            android:layout_width="33dp"
-            android:layout_height="33dp"
-            android:layout_marginRight="6dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:contentDescription="@string/action_copy"
-            android:tint="@color/colorMenuIcon"
+            android:tint="?colorControlNormal"
+            android:scaleType="center"
             app:srcCompat="@drawable/ic_copy"/>
     
         <TextView
@@ -31,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="@string/action_copy"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
     
     </LinearLayout>
     
@@ -39,7 +38,8 @@
         android:background="?android:attr/dividerVertical"
         android:layout_height="1dp"
         android:layout_width="match_parent"
-        android:layout_marginLeft="47dp"/>
+        android:layout_marginLeft="48dp"
+        android:layout_marginStart="48dp"/>
     
     <LinearLayout
         android:layout_height="wrap_content"
@@ -49,22 +49,22 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:padding="8dp"
         android:id="@+id/dialogWifiCode">
     
         <ImageView
-            android:layout_width="33dp"
-            android:layout_height="33dp"
-            android:layout_marginRight="6dp"
-            android:tint="@color/colorMenuIcon"
-            app:srcCompat="@drawable/ic_qrcode"/>
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/action_code"
+            android:tint="?colorControlNormal"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_qr_code"/>
         
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/action_code"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
     
     </LinearLayout>
     
@@ -72,7 +72,8 @@
         android:background="?android:attr/dividerVertical"
         android:layout_height="1dp"
         android:layout_width="match_parent"
-        android:layout_marginLeft="46dp"/>
+        android:layout_marginLeft="48dp"
+        android:layout_marginStart="48dp"/>
     
     <LinearLayout
         android:layout_height="wrap_content"
@@ -82,14 +83,14 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:padding="8dp"
         android:id="@+id/dialogWifiOpen">
     
         <ImageView
-            android:layout_width="33dp"
-            android:layout_height="33dp"
-            android:layout_marginRight="6dp"
-            android:tint="@color/colorMenuIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/action_info"
+            android:tint="?colorControlNormal"
+            android:scaleType="center"
             app:srcCompat="@drawable/ic_open"/>
         
         <TextView
@@ -97,7 +98,7 @@
             android:layout_width="wrap_content"
             android:text="@string/action_info"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
     
     </LinearLayout>
     
@@ -105,7 +106,8 @@
         android:background="?android:attr/dividerVertical"
         android:layout_height="1dp"
         android:layout_width="match_parent"
-        android:layout_marginLeft="47dp"/>
+        android:layout_marginLeft="48dp"
+        android:layout_marginStart="48dp"/>
     
     <LinearLayout
         android:layout_height="wrap_content"
@@ -115,14 +117,14 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:padding="8dp"
         android:id="@+id/dialogWifiShare">
     
         <ImageView
-            android:layout_width="33dp"
-            android:layout_height="33dp"
-            android:layout_marginRight="6dp"
-            android:tint="@color/colorMenuIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/action_share"
+            android:tint="?colorControlNormal"
+            android:scaleType="center"
             app:srcCompat="@drawable/ic_share"/>
         
         <TextView
@@ -130,7 +132,7 @@
             android:layout_width="wrap_content"
             android:text="@string/action_share"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
     
     </LinearLayout>
     
@@ -141,7 +143,7 @@
         android:gravity="center">
         
         <Button
-            style="?android:attr/buttonBarButtonStyle"
+            style="?borderlessButtonStyle"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/action_cancel"

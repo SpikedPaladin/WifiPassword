@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,10 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import me.paladin.wifi.R;
-import me.paladin.wifi.model.WifiItem;
+import me.paladin.wifi.model.WifiModel;
 
 public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
-    private ArrayList<WifiItem> filteredData, data;
+    private ArrayList<WifiModel> filteredData, data;
     private ItemClickListener listener;
     private LayoutInflater inflater;
     private Context context;
@@ -40,31 +39,8 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
     
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        WifiItem item = getItem(position);
-        holder.ssid.setText(item.getSsid());
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        if (pref.getBoolean("show_passwords", true)) {
-            holder.password.setText(item.getPassword());
-        } else {
-            holder.password.setText(item.getProtectedPassword());
-        }
-        holder.type.setText(item.getType());
-        if (item.getPassword().length() <= 0) {
-            holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_wifi));
-        }
-        if (item.getUser().length() > 0) {
-            StringBuilder user = new StringBuilder();
-            if (item.getType().equals(WifiItem.TYPE_ENTERPRISE)) {
-                user.append("User: ");
-            } else if (item.getType().equals(WifiItem.TYPE_WEP)) {
-                user.append("Keyindex: ");
-            }
-            user.append(item.getUser());
-            holder.user.setText(user.toString());
-            holder.user.setVisibility(TextView.VISIBLE);
-        } else {
-            holder.user.setVisibility(TextView.GONE);
-        }
+        WifiModel item = getItem(position);
+        holder.bind(item);
     }
     
     @Override
@@ -72,22 +48,26 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
         return filteredData.size();
     }
     
-    public WifiItem getItem(int position) {
+    public WifiModel getItem(int position) {
         return filteredData.get(position);
     }
     
-    public void setItems(ArrayList<WifiItem> items) {
+    public ArrayList<WifiModel> getItems() {
+        return data;
+    }
+    
+    public void setItems(ArrayList<WifiModel> items) {
         data = items;
         filteredData = data;
     }
     
-    public void addItem(WifiItem item) {
+    public void addItem(WifiModel item) {
         data.add(item);
         filteredData = data;
     }
     
     public void clear() {
-        data = new ArrayList<>();
+        data.clear();
         filteredData = data;
     }
     
@@ -100,8 +80,8 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
                 if (charString.isEmpty()) {
                     filteredData = data;
                 } else {
-                    ArrayList<WifiItem> filteredList = new ArrayList<>();
-                    for (WifiItem item : data) {
+                    ArrayList<WifiModel> filteredList = new ArrayList<>();
+                    for (WifiModel item : data) {
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
                         if (item.getSsid().toLowerCase().contains(charString) || (preferences != null && preferences.getBoolean("password_search_enabled", false) && item.getPassword().toLowerCase().contains(charString))) {
                             filteredList.add(item);
@@ -117,7 +97,7 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                filteredData = (ArrayList<WifiItem>) filterResults.values;
+                filteredData = (ArrayList<WifiModel>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
@@ -125,22 +105,44 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
     
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView ssid, password, user, type;
-        ImageView image;
         
         private ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ssid = itemView.findViewById(R.id.adapterSSID);
-            password = itemView.findViewById(R.id.adapterPassword);
-            user = itemView.findViewById(R.id.adapterUser);
-            type = itemView.findViewById(R.id.adapterType);
-            image = itemView.findViewById(R.id.adapterImage);
-            itemView.setOnClickListener(this);
+            ssid = itemView.findViewById(R.id.adapter_ssid);
+            password = itemView.findViewById(R.id.adapter_password);
+            user = itemView.findViewById(R.id.adapter_user);
+            type = itemView.findViewById(R.id.adapter_type);
         }
-    
+        
+        private void bind(@NonNull WifiModel item) {
+            itemView.setOnClickListener(this);
+            ssid.setText(item.getSsid());
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+            if (pref.getBoolean("show_passwords", true)) {
+                password.setText(item.getPassword());
+            } else {
+                password.setText(item.getProtectedPassword());
+            }
+            type.setText(item.getType());
+            if (item.getPassword().length() <= 0) {
+                type.setCompoundDrawables(null, ContextCompat.getDrawable(context, R.drawable.ic_wifi), null, null);
+            }
+            if (item.getUser().length() > 0) {
+                if (item.getType().equals(WifiModel.TYPE_ENTERPRISE)) {
+                    user.setText(context.getString(R.string.description_user, item.getUser()));
+                } else if (item.getType().equals(WifiModel.TYPE_WEP)) {
+                    user.setText(context.getString(R.string.description_key_index, item.getUser()));
+                }
+                user.setVisibility(TextView.VISIBLE);
+            } else {
+                user.setVisibility(TextView.GONE);
+            }
+        }
+        
         @Override
         public void onClick(View view) {
             if (listener != null) {
-                listener.onItemClick(view, getAdapterPosition());
+                listener.onItemClick(view, getAbsoluteAdapterPosition());
             }
         }
     }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <style name="AppTheme" parent="Base.AppTheme">
+        <item name="colorPrimary">@color/colorToolbarDark</item>
+        <item name="colorPrimaryDark">@color/colorStatusBarDark</item>
+        <item name="colorSecondary">@color/colorAccentLight</item>
+        <item name="colorSecondaryVariant">@color/colorAccentDark</item>
+        <item name="android:colorBackground">@color/colorBackgroundDark</item>
+        <item name="colorSurface">@color/black_800</item>
+        <item name="colorError">@color/colorErrorDark</item>
+        <item name="colorOnPrimary">@color/black_900</item>
+        <item name="colorOnSecondary">@color/black_900</item>
+        <item name="colorOnBackground">@color/white_50</item>
+        <item name="colorOnSurface">@color/white_50</item>
+        <item name="colorOnError">@color/black_900</item>
+    </style>
+    
+</resources>

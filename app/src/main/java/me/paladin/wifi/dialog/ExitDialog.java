@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Window;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -28,12 +27,7 @@ public class ExitDialog extends AppCompatDialogFragment implements DialogInterfa
         builder.setMessage(R.string.dialog_exit_message);
         builder.setPositiveButton(R.string.action_confirm, this);
         builder.setNegativeButton(R.string.action_cancel, null);
-        AlertDialog dialog = builder.create();
-        Window window = dialog.getWindow();
-        if (window != null) {
-            window.getAttributes().windowAnimations = R.style.AppTheme_Dialog;
-        }
-        return dialog;
+        return builder.create();
     }
     
     @Override

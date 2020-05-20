@@ -1,6 +1,5 @@
 package me.paladin.wifi.activity;
 
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,14 +9,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import me.paladin.wifi.R;
-import me.paladin.wifi.model.WifiItem;
+import me.paladin.wifi.dialog.CodeDialog;
+import me.paladin.wifi.model.WifiModel;
 
-public class InfoActivity extends AppCompatActivity {
-    private WifiItem item;
+public class InfoActivity extends AppCompatActivity implements View.OnClickListener {
+    private WifiModel item;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +30,16 @@ public class InfoActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         item = getIntent().getParcelableExtra("item");
-        TextView ssidText, passwordText;
-        ssidText = findViewById(R.id.infoSSID);
-        passwordText = findViewById(R.id.infoPassword);
-        ssidText.setText(item.getSsid());
-        passwordText.setText(item.getPassword());
+        TextView name = findViewById(R.id.info_name);
+        TextView password = findViewById(R.id.info_password);
+        LinearLayout code = findViewById(R.id.info_action_get_code);
+        LinearLayout copy_all = findViewById(R.id.info_action_copy_all);
+        ImageView copy_password = findViewById(R.id.info_action_copy_password);
+        name.setText(item.getSsid());
+        password.setText(item.getPassword());
+        code.setOnClickListener(this);
+        copy_all.setOnClickListener(this);
+        copy_password.setOnClickListener(this);
     }
     
     @Override
@@ -43,20 +50,30 @@ public class InfoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     
+    @Override
     public void onClick(View view) {
-        int id = view.getId();
-        @StringRes int message = -1;
-        String value = "";
-        if (id == R.id.infoSSIDCopy) {
-            message = R.string.message_copied_ssid;
-            value = item.getSsid();
-        } else if (id == R.id.infoPasswordCopy) {
-            message = R.string.message_copied_password;
-            value = item.getPassword();
+        String text = null;
+        switch (view.getId()) {
+            case R.id.info_action_get_code:
+                new CodeDialog().show(getSupportFragmentManager(), item);
+                break;
+            case R.id.info_action_copy_all:
+                Toast.makeText(this, R.string.message_copied, Toast.LENGTH_SHORT).show();
+                if (item.getUser().length() > 0) {
+                    text = item.getSsid() + "\n" + item.getType() + "\n" + item.getUser() + "\n" + item.getPassword();
+                } else {
+                    text = item.getSsid() + "\n" + item.getType() + "\n" + item.getPassword();
+                }
+                break;
+            case R.id.info_action_copy_password:
+                Toast.makeText(this, R.string.message_copied_password, Toast.LENGTH_SHORT).show();
+                text = item.getPassword();
+                break;
         }
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("Info", value);
-        clipboard.setPrimaryClip(clip);
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (text != null) {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("Info", text);
+            clipboard.setPrimaryClip(clip);
+        }
     }
 }

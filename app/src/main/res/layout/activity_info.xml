@@ -1,107 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.InfoActivity">
     
-    <ImageView
-        android:id="@+id/ssidImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/description_ssid"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
-        app:srcCompat="@drawable/ic_ssid"/>
-    
-    <ImageView
-        android:id="@+id/passwordImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/description_password"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@+id/ssidImage"
-        app:layout_constraintTop_toBottomOf="@+id/ssidImage"
-        app:srcCompat="@drawable/ic_password"/>
-    
     <TextView
-        android:id="@+id/infoSSID"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/shape_info_text"
+        android:id="@+id/info_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="28sp"
+        android:padding="12dp"
+        tools:text="Name"/>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <LinearLayout
+            android:id="@+id/info_action_get_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp">
+            
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="?colorSecondary"
+                android:contentDescription="@string/description_code"
+                app:srcCompat="@drawable/ic_qr_code"/>
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?colorSecondary"
+                android:textStyle="bold"
+                android:text="@string/description_code"/>
+            
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/info_action_copy_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp">
+            
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="?colorSecondary"
+                android:contentDescription="@string/description_copy_all"
+                app:srcCompat="@drawable/ic_copy"/>
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?colorSecondary"
+                android:textStyle="bold"
+                android:text="@string/description_copy_all"/>
+            
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingLeft="8dp"
         android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:textIsSelectable="true"
-        android:textSize="18sp"
-        android:elevation="2dp"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/ssidImage"
-        app:layout_constraintEnd_toStartOf="@+id/infoSSIDCopy"
-        app:layout_constraintStart_toEndOf="@+id/ssidImage"
-        app:layout_constraintTop_toTopOf="@+id/ssidImage"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="SSID"/>
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp">
+        
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            
+            <TextView
+                android:id="@+id/info_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?android:textColorPrimary"
+                android:textIsSelectable="true"
+                android:textSize="18sp"
+                tools:text="Password"/>
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?android:textColorSecondary"
+                android:text="@string/description_password"/>
+            
+        </LinearLayout>
+        
+        <ImageView
+            style="?actionButtonStyle"
+            android:id="@+id/info_action_copy_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="?colorControlNormal"
+            android:contentDescription="@string/description_copy_password"
+            app:srcCompat="@drawable/ic_copy"/>
+        
+    </LinearLayout>
     
-    <TextView
-        android:id="@+id/infoPassword"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/shape_info_text"
-        android:gravity="center_vertical"
-        android:paddingLeft="8dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:textIsSelectable="true"
-        android:textSize="18sp"
-        android:elevation="2dp"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/passwordImage"
-        app:layout_constraintEnd_toStartOf="@+id/infoPasswordCopy"
-        app:layout_constraintStart_toEndOf="@+id/passwordImage"
-        app:layout_constraintTop_toTopOf="@+id/passwordImage"
-        tools:text="Password"/>
-    
-    <ImageView
-        android:id="@+id/infoSSIDCopy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:contentDescription="@string/description_copy_ssid"
-        android:onClick="onClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.955"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
-        app:srcCompat="@drawable/ic_copy"/>
-    
-    <ImageView
-        android:id="@+id/infoPasswordCopy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="?attr/selectableItemBackground"
-        android:contentDescription="@string/description_copy_password"
-        android:onClick="onClick"
-        app:layout_constraintEnd_toEndOf="@+id/infoSSIDCopy"
-        app:layout_constraintTop_toBottomOf="@+id/infoSSIDCopy"
-        app:srcCompat="@drawable/ic_copy"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-public class WifiItem implements Parcelable {
+public class WifiModel implements Parcelable {
     private String ssid;
     private String password;
     private String user;
@@ -15,11 +15,11 @@ public class WifiItem implements Parcelable {
     public static String TYPE_WEP = "WEP";
     public static String TYPE_WPA = "WPA/WPA2";
     
-    public WifiItem() {
+    public WifiModel() {
     
     }
     
-    private WifiItem(Parcel in) {
+    private WifiModel(Parcel in) {
         ssid = in.readString();
         password = in.readString();
         user = in.readString();
@@ -94,15 +94,15 @@ public class WifiItem implements Parcelable {
         dest.writeString(type);
     }
     
-    public static final Creator<WifiItem> CREATOR = new Creator<WifiItem>() {
+    public static final Creator<WifiModel> CREATOR = new Creator<WifiModel>() {
         @Override
-        public WifiItem createFromParcel(Parcel in) {
-            return new WifiItem(in);
+        public WifiModel createFromParcel(Parcel in) {
+            return new WifiModel(in);
         }
         
         @Override
-        public WifiItem[] newArray(int size) {
-            return new WifiItem[size];
+        public WifiModel[] newArray(int size) {
+            return new WifiModel[size];
         }
     };
     

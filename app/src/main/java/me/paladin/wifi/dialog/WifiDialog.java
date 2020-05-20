@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,11 +20,11 @@ import androidx.fragment.app.FragmentManager;
 
 import me.paladin.wifi.R;
 import me.paladin.wifi.activity.InfoActivity;
-import me.paladin.wifi.model.WifiItem;
+import me.paladin.wifi.model.WifiModel;
 
 public class WifiDialog extends DialogFragment implements View.OnClickListener {
     private Activity activity;
-    private WifiItem item;
+    private WifiModel item;
     
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,12 +49,7 @@ public class WifiDialog extends DialogFragment implements View.OnClickListener {
         view.findViewById(R.id.dialogWifiClose).setOnClickListener(this);
         builder.setView(view);
         builder.setTitle(item.getSsid());
-        AlertDialog dialog = builder.create();
-        Window window = dialog.getWindow();
-        if (window != null) {
-            window.getAttributes().windowAnimations = R.style.AppTheme_Dialog;
-        }
-        return dialog;
+        return builder.create();
     }
     
     @Override
@@ -68,7 +62,7 @@ public class WifiDialog extends DialogFragment implements View.OnClickListener {
             Toast.makeText(activity, R.string.message_copied_password, Toast.LENGTH_SHORT).show();
             dismiss();
         } else if (id == R.id.dialogWifiCode) {
-            new CodeDialog().show(getFragmentManager(), item);
+            new CodeDialog().show(getParentFragmentManager(), item);
             dismiss();
         } else if (id == R.id.dialogWifiOpen) {
             Intent intent = new Intent(activity, InfoActivity.class);
@@ -93,7 +87,7 @@ public class WifiDialog extends DialogFragment implements View.OnClickListener {
         outState.putParcelable("item", item);
     }
     
-    public void show(FragmentManager manager, WifiItem item) {
+    public void show(FragmentManager manager, WifiModel item) {
         if (!isAdded()) {
             this.item = item;
             show(manager, "WifiDialog");

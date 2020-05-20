@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item android:alpha="@dimen/text_btn_ripple_pressed" android:color="?colorSecondary" android:state_pressed="true"/>
+    <item android:alpha="@dimen/text_btn_ripple_focused" android:color="?colorSecondary" android:state_focused="true" android:state_hovered="true"/>
+    <item android:alpha="@dimen/text_btn_ripple_focused" android:color="?colorSecondary" android:state_focused="true"/>
+    <item android:alpha="@dimen/text_btn_ripple_hovered" android:color="?colorSecondary" android:state_hovered="true"/>
+    <item android:alpha="@dimen/text_btn_ripple_default" android:color="?colorSecondary"/>
+    
+</selector>

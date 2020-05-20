@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_btn_ripple_default">0.24</dimen>
+    <dimen name="text_btn_ripple_focused">0.24</dimen>
+    <dimen name="text_btn_ripple_hovered">0.08</dimen>
+    <dimen name="text_btn_ripple_pressed">0.24</dimen>
+</resources>

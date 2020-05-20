@@ -2,17 +2,14 @@ package me.paladin.wifi.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
-import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        banner = findViewById(R.id.mainBanner);
+        banner = findViewById(R.id.main_banner);
         if (preferences != null && !preferences.getBoolean("ad_enabled", true)) {
             banner.setVisibility(View.GONE);
             adLoaded = false;
@@ -60,12 +57,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     
-    @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (menu instanceof MenuBuilder) {
-            ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        }
         getMenuInflater().inflate(R.menu.menu_main_toolbar, menu);
         searchItem = menu.findItem(R.id.item_main_search);
         if (preferences != null && !preferences.getBoolean("search_enabled", true)) {
@@ -102,16 +95,8 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.item_main_about) {
             startActivity(new Intent(this, AboutActivity.class));
         } else if (id == R.id.item_main_rate) {
-            Uri uri = Uri.parse("market://details?id=" + getPackageName());
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            int flags = Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK;
-            if (Build.VERSION.SDK_INT >= 21)
-                flags |= Intent.FLAG_ACTIVITY_NEW_DOCUMENT;
-            else
-                flags |= Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET;
-            intent.addFlags(flags);
             try {
-                startActivity(intent);
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
             } catch (ActivityNotFoundException ex) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
             }
@@ -142,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (data.getBooleanExtra("search", false)) {
                 if (searchItem.isVisible()) {
+                    searchItem.collapseActionView();
                     searchItem.setVisible(false);
                 } else {
                     searchItem.setVisible(true);

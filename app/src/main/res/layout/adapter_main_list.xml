@@ -16,39 +16,38 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingLeft="2dp">
-    
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:paddingStart="8dp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp">
+        
         <TextView
-            android:id="@+id/adapterSSID"
+            android:id="@+id/adapter_ssid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:paddingLeft="6dp"
-            android:paddingTop="6dp"
             android:singleLine="true"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="20sp"
             tools:text="SSID"/>
-    
+        
         <TextView
-            android:id="@+id/adapterUser"
+            android:id="@+id/adapter_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:padding="6dp"
             android:singleLine="true"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="20sp"
             tools:text="User"
             tools:visibility="gone"/>
-    
+        
         <TextView
-            android:id="@+id/adapterPassword"
+            android:id="@+id/adapter_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:paddingLeft="6dp"
-            android:paddingBottom="6dp"
             android:singleLine="true"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="14sp"
@@ -62,16 +61,19 @@
         android:layout_weight="0"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingRight="6dp">
-    
+        android:paddingLeft="8dp"
+        android:paddingStart="8dp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp">
+        
         <ImageView
-            android:id="@+id/adapterImage"
+            android:id="@+id/adapter_image"
             android:layout_width="35dp"
             android:layout_height="35dp"
             app:srcCompat="@drawable/ic_wifi_lock"/>
     
         <TextView
-            android:id="@+id/adapterType"
+            android:id="@+id/adapter_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?android:attr/textColorSecondary"

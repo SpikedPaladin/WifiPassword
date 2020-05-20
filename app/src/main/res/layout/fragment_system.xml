@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/message_root_error"
-            android:textColor="#D32F2F"
+            android:textColor="?colorError"
             android:textSize="30sp"/>
         
         <TextView
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@string/message_root_error_description"
-            android:textColor="#D32F2F"
+            android:textColor="?colorError"
             android:textSize="18sp"/>
         
     </LinearLayout>

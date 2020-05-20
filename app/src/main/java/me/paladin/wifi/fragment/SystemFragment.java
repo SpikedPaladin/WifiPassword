@@ -33,14 +33,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import me.paladin.wifi.R;
 import me.paladin.wifi.adapter.WifiAdapter;
 import me.paladin.wifi.dialog.WifiDialog;
-import me.paladin.wifi.model.WifiItem;
+import me.paladin.wifi.model.WifiModel;
 
 import static me.paladin.wifi.util.XmlUtil.getNodeByAttribute;
 import static me.paladin.wifi.util.XmlUtil.getNodeValueByAttribute;
 import static me.paladin.wifi.util.XmlUtil.hasNodeAttribute;
 
 public class SystemFragment extends Fragment implements WifiAdapter.ItemClickListener {
-    private ArrayList<WifiItem> items = new ArrayList<>();
     private WifiDialog wifiDialog;
     private LinearLayout error;
     private RecyclerView list;
@@ -63,7 +62,6 @@ public class SystemFragment extends Fragment implements WifiAdapter.ItemClickLis
         if (getContext() != null) list.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         adapter = new WifiAdapter(getContext());
         adapter.setClickListener(this);
-        adapter.setItems(items);
         list.setAdapter(adapter);
         wifiDialog = new WifiDialog();
         setHasOptionsMenu(true);
@@ -78,9 +76,9 @@ public class SystemFragment extends Fragment implements WifiAdapter.ItemClickLis
         } else {
             rooted = savedInstanceState.getBoolean("rooted");
             if (rooted) {
-                ArrayList<WifiItem> savedItems = savedInstanceState.getParcelableArrayList("items");
+                ArrayList<WifiModel> savedItems = savedInstanceState.getParcelableArrayList("items");
                 if (savedItems != null) {
-                    items.addAll(savedItems);
+                    adapter.setItems(savedItems);
                     adapter.notifyDataSetChanged();
                 }
             } else {
@@ -155,7 +153,7 @@ public class SystemFragment extends Fragment implements WifiAdapter.ItemClickLis
             Document doc = builder.parse(process.getInputStream());
             Element element = doc.getDocumentElement();
             element.normalize();
-            WifiItem currWifi = null;
+            WifiModel currWifi = null;
             NodeList listNet = doc.getElementsByTagName("Network");
             for (int indexNet = 0; indexNet < listNet.getLength(); indexNet++) {
                 Node net = listNet.item(indexNet);
@@ -164,19 +162,19 @@ public class SystemFragment extends Fragment implements WifiAdapter.ItemClickLis
                     Node nodeConf = listConf.item(i);
                     if (nodeConf.getNodeType() == Node.ELEMENT_NODE) {
                         if (hasNodeAttribute(nodeConf, "string", "ConfigKey")) {
-                            currWifi = new WifiItem();
+                            currWifi = new WifiModel();
                             String name = getNodeValueByAttribute(nodeConf, "string", "SSID");
                             name = name.substring(1, name.length() - 1);
                             currWifi.setSsid(name);
                             if (hasNodeAttribute(nodeConf, "string", "PreSharedKey")) {
-                                currWifi.setType(WifiItem.TYPE_WPA);
+                                currWifi.setType(WifiModel.TYPE_WPA);
                                 String password = getNodeValueByAttribute(nodeConf, "string", "PreSharedKey");
                                 password = password.substring(1, password.length() - 1);
                                 currWifi.setPassword(password);
                             } else {
                                 Node nodeWep = getNodeByAttribute(nodeConf, "string-array", "WEPKeys");
                                 if (nodeWep != null) {
-                                    currWifi.setType(WifiItem.TYPE_WEP);
+                                    currWifi.setType(WifiModel.TYPE_WEP);
                                     NodeList listWepKeys = ((Element) nodeWep).getElementsByTagName("item");
                                     for (int indexWepKey = 0; indexWepKey < listWepKeys.getLength(); indexWepKey++) {
                                         NamedNodeMap temp = listWepKeys.item(indexWepKey).getAttributes();
@@ -204,7 +202,7 @@ public class SystemFragment extends Fragment implements WifiAdapter.ItemClickLis
                         String key = getNodeValueByAttribute(nodeEnterprise, "string", "Password");
                         key = key.substring(1, key.length() - 1);
                         currWifi.setPassword(key);
-                        currWifi.setType(WifiItem.TYPE_ENTERPRISE);
+                        currWifi.setType(WifiModel.TYPE_ENTERPRISE);
                     }
                 }
                 addNewItem(currWifi);
@@ -225,10 +223,10 @@ public class SystemFragment extends Fragment implements WifiAdapter.ItemClickLis
                 out.flush();
                 out.close();
                 String line = reader.readLine();
-                WifiItem currWifi = null;
+                WifiModel currWifi = null;
                 while (line != null) {
                     if (line.trim().startsWith("network={")) {
-                        currWifi = new WifiItem();
+                        currWifi = new WifiModel();
                     } else if (line.trim().startsWith("}")) {
                         if (currWifi != null) {
                             boolean ignore = false;
@@ -252,12 +250,12 @@ public class SystemFragment extends Fragment implements WifiAdapter.ItemClickLis
                                     currWifi.setSsid(value);
                                     break;
                                 case "password":
-                                    currWifi.setType(WifiItem.TYPE_ENTERPRISE);
+                                    currWifi.setType(WifiModel.TYPE_ENTERPRISE);
                                     value = value.substring(1, value.length() - 1);
                                     currWifi.setPassword(value);
                                     break;
                                 case "psk":
-                                    currWifi.setType(WifiItem.TYPE_WPA);
+                                    currWifi.setType(WifiModel.TYPE_WPA);
                                     value = value.substring(1, value.length() - 1);
                                     currWifi.setPassword(value);
                                     break;
@@ -267,25 +265,25 @@ public class SystemFragment extends Fragment implements WifiAdapter.ItemClickLis
                                     break;
                                 case "wep_key0":
                                     currWifi.setUser("1");
-                                    currWifi.setType(WifiItem.TYPE_WEP);
+                                    currWifi.setType(WifiModel.TYPE_WEP);
                                     value = value.substring(1, value.length() - 1);
                                     currWifi.setPassword(value);
                                     break;
                                 case "wep_key1":
                                     currWifi.setUser("2");
-                                    currWifi.setType(WifiItem.TYPE_WEP);
+                                    currWifi.setType(WifiModel.TYPE_WEP);
                                     value = value.substring(1, value.length() - 1);
                                     currWifi.setPassword(value);
                                     break;
                                 case "wep_key2":
                                     currWifi.setUser("3");
-                                    currWifi.setType(WifiItem.TYPE_WEP);
+                                    currWifi.setType(WifiModel.TYPE_WEP);
                                     value = value.substring(1, value.length() - 1);
                                     currWifi.setPassword(value);
                                     break;
                                 case "wep_key3":
                                     currWifi.setUser("4");
-                                    currWifi.setType(WifiItem.TYPE_WEP);
+                                    currWifi.setType(WifiModel.TYPE_WEP);
                                     value = value.substring(1, value.length() - 1);
                                     currWifi.setPassword(value);
                                     break;
@@ -305,7 +303,7 @@ public class SystemFragment extends Fragment implements WifiAdapter.ItemClickLis
      * Add new item to adapter and call {@link RecyclerView.Adapter#notifyDataSetChanged()}
      * @param item item to add
      */
-    private void addNewItem(WifiItem item) {
+    private void addNewItem(WifiModel item) {
         if (item != null && item.getSsid().length() > 0 && item.getPassword().length() > 0) {
             adapter.addItem(item);
         }
@@ -316,11 +314,11 @@ public class SystemFragment extends Fragment implements WifiAdapter.ItemClickLis
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("rooted", rooted);
-        outState.putParcelableArrayList("items", items);
+        outState.putParcelableArrayList("items", adapter.getItems());
     }
     
     @Override
     public void onItemClick(View view, int position) {
-        wifiDialog.show(getFragmentManager(), adapter.getItem(position));
+        wifiDialog.show(getParentFragmentManager(), adapter.getItem(position));
     }
 }
