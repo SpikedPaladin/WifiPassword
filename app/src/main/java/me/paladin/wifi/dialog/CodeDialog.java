@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -38,6 +40,15 @@ public class CodeDialog extends DialogFragment implements View.OnClickListener, 
     private Activity activity;
     private WifiModel item;
     private Bitmap bitmap;
+    
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+        registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+            if (isGranted) {
+                saveCode();
+            } else {
+                Toast.makeText(getContext(), R.string.message_permission_denied, Toast.LENGTH_SHORT).show();
+            }
+        });
     
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -164,7 +175,7 @@ public class CodeDialog extends DialogFragment implements View.OnClickListener, 
         if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED) {
             saveCode();
         } else {
-            requestPermissions(new String[] {android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            requestPermissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
     }
     
@@ -177,15 +188,6 @@ public class CodeDialog extends DialogFragment implements View.OnClickListener, 
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable("item", item);
-    }
-    
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (grantResults.length <= 0 || grantResults[0] != PermissionChecker.PERMISSION_GRANTED) {
-            Toast.makeText(getContext(), R.string.message_permission_denied, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        saveCode();
     }
     
     public void show(FragmentManager manager, WifiModel item) {
