@@ -63,8 +63,8 @@
             android:contentDescription="@string/description_github"
             android:onClick="onClick"
             android:layout_marginRight="12dp"
-            android:tint="?colorControlNormal"
-            app:srcCompat="@drawable/ic_github"/>
+            android:src="@drawable/ic_github"
+            app:tint="?colorControlNormal"/>
         
         <ImageView
             android:id="@+id/about_telegram"
@@ -75,9 +75,9 @@
             android:contentDescription="@string/description_telegram"
             android:onClick="onClick"
             android:layout_marginLeft="12dp"
-            android:tint="?colorControlNormal"
-            app:srcCompat="@drawable/ic_telegram"/>
-    
+            android:src="@drawable/ic_telegram"
+            app:tint="?colorControlNormal"/>
+        
     </LinearLayout>
-
+    
 </LinearLayout>

@@ -21,9 +21,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:contentDescription="@string/action_copy"
-            android:tint="?colorControlNormal"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_copy"/>
+            android:src="@drawable/ic_copy"
+            app:tint="?colorControlNormal"/>
     
         <TextView
             android:layout_width="wrap_content"
@@ -55,9 +55,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:contentDescription="@string/action_code"
-            android:tint="?colorControlNormal"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_qr_code"/>
+            android:src="@drawable/ic_qr_code"
+            app:tint="?colorControlNormal"/>
         
         <TextView
             android:layout_height="wrap_content"
@@ -89,9 +89,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:contentDescription="@string/action_info"
-            android:tint="?colorControlNormal"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_open"/>
+            android:src="@drawable/ic_open"
+            app:tint="?colorControlNormal"/>
         
         <TextView
             android:layout_height="wrap_content"
@@ -123,9 +123,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:contentDescription="@string/action_share"
-            android:tint="?colorControlNormal"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_share"/>
+            android:src="@drawable/ic_share"
+            app:tint="?colorControlNormal"/>
         
         <TextView
             android:layout_height="wrap_content"

@@ -42,9 +42,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tint="?colorSecondary"
                 android:contentDescription="@string/description_code"
-                app:srcCompat="@drawable/ic_qr_code"/>
+                android:src="@drawable/ic_qr_code"
+                app:tint="?colorSecondary"/>
             
             <TextView
                 android:layout_width="wrap_content"
@@ -69,9 +69,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tint="?colorSecondary"
                 android:contentDescription="@string/description_copy_all"
-                app:srcCompat="@drawable/ic_copy"/>
+                android:src="@drawable/ic_copy"
+                app:tint="?colorSecondary"/>
             
             <TextView
                 android:layout_width="wrap_content"
@@ -127,9 +127,9 @@
             android:id="@+id/info_action_copy_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="?colorControlNormal"
+            app:tint="?colorControlNormal"
             android:contentDescription="@string/description_copy_password"
-            app:srcCompat="@drawable/ic_copy"/>
+            android:src="@drawable/ic_copy"/>
         
     </LinearLayout>
     
