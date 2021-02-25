@@ -25,6 +25,19 @@
             android:value="ca-app-pub-3940256099942544~3347511713"/>
         
         <activity
+            android:name=".activity.SplashActivity"
+            android:theme="@style/AppTheme.Splash">
+    
+            <intent-filter>
+        
+                <action android:name="android.intent.action.MAIN"/>
+        
+                <category android:name="android.intent.category.LAUNCHER"/>
+    
+            </intent-filter>
+        </activity>
+        
+        <activity
             android:name=".activity.InfoActivity"
             android:label="@string/action_info"/>
         
@@ -39,13 +52,6 @@
         <activity
             android:name=".activity.MainActivity">
             
-            <intent-filter>
-                
-                <action android:name="android.intent.action.MAIN"/>
-                
-                <category android:name="android.intent.category.LAUNCHER"/>
-                
-            </intent-filter>
             
         </activity>
         
