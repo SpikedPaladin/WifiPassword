@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorIconBackground">#2886FF</color>
+    
     <color name="colorBlue500">#2196F3</color>
     <color name="colorBlue700">#1976D2</color>
     
