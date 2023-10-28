@@ -1,0 +1,51 @@
+[versions]
+libsu = "5.1.0"
+agp = "8.1.2"
+kotlin-android = "1.9.10"
+core-ktx = "1.12.0"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+lifecycle-runtime-ktx = "2.6.2"
+activity-compose = "1.8.0"
+compose-bom = "2023.10.01"
+material = "1.2.0-alpha09"
+datastore = "1.1.0-alpha05"
+zxing = "3.5.2"
+room = "2.6.0"
+ksp = "1.9.10-1.0.13"
+jsoup = "1.16.2"
+admob = "22.4.0"
+ump = "2.1.0"
+
+[libraries]
+ump = { group = "com.google.android.ump", name = "user-messaging-platform", version.ref = "ump"}
+admob = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "admob" }
+jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
+zxing = { group = "com.google.zxing", name = "core", version.ref = "zxing" }
+datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+libsu-core = { group = "com.github.topjohnwu.libsu", name = "core", version.ref = "libsu" }
+libsu-io = { group = "com.github.topjohnwu.libsu", name = "io", version.ref = "libsu" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+material = { group = "androidx.compose.material3", name = "material3", version.ref = "material" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.4" }
+room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+[plugins]
+com-android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-android" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

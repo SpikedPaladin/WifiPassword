@@ -1,30 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorIconBackground">#2886FF</color>
-    
-    <color name="colorSplashBackground">#2886FF</color>
-    
-    <color name="colorBlue500">#2196F3</color>
-    <color name="colorBlue700">#1976D2</color>
-    
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorAccentLight">#FF669A</color>
-    <color name="colorAccentDark">#B22C5A</color>
-    
-    <color name="colorStatusBarLight">#BBBBBB</color>
-    <color name="colorStatusBarDark">#232323</color>
-    
-    <color name="colorToolbarLight">#FFFFFF</color>
-    <color name="colorToolbarDark">#303030</color>
-    
-    <color name="colorBackgroundLight">#FAFAFA</color>
-    <color name="colorBackgroundDark">#202020</color>
-    
-    <color name="colorErrorLight">#b00020</color>
-    <color name="colorErrorDark">#cf6679</color>
-    
-    <color name="white_50">#ffffff</color>
-    
-    <color name="black_800">#121212</color>
-    <color name="black_900">#000000</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
 </resources>
