@@ -13,14 +13,13 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
-import me.paladin.wifi.Locator
 import me.paladin.wifi.models.AppTheme
 import me.paladin.wifi.ui.main.viewmodels.ThemeViewModel
 import me.paladin.wifi.ui.theme.WifiPasswordTheme
 import java.util.concurrent.atomic.AtomicBoolean
 
 class MainActivity : ComponentActivity() {
-    private val viewModel by viewModels<ThemeViewModel>(factoryProducer = { Locator.themeViewModelFactory })
+    private val viewModel by viewModels<ThemeViewModel>()
     private lateinit var consentInformation: ConsentInformation
     private var isMobileAdsInitializeCalled = AtomicBoolean(false)
 

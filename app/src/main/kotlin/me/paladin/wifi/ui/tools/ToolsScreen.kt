@@ -1,6 +1,5 @@
 package me.paladin.wifi.ui.tools
 
-import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,8 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -20,33 +23,32 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import me.paladin.wifi.models.WifiModel
 import me.paladin.wifi.ui.components.ExpandableCard
-import me.paladin.wifi.ui.components.QRBottomSheet
 import me.paladin.wifi.ui.components.WifiActions
 import me.paladin.wifi.ui.components.WifiItem
 
 @Composable
 fun ToolsScreen(
-    viewModel: ToolsViewModel = viewModel()
+    viewModel: ToolsViewModel = viewModel(),
+    settingsAction: () -> Unit
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val selectedId by viewModel.selectedId.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
-    var displayQr by remember { mutableStateOf<WifiModel?>(null) }
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
-            ToolsTopBar(scrollBehavior)
+            ToolsTopBar(
+                scrollBehavior = scrollBehavior,
+                settingsAction = settingsAction
+            )
         },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { paddingValues ->
@@ -70,27 +72,14 @@ fun ToolsScreen(
                         itemsIndexed((uiState as UiState.Success).data) { index, item ->
                             ExpandableCard(
                                 expandedContent = {
-                                    val sendIntent: Intent = Intent().apply {
-                                        action = Intent.ACTION_SEND
-                                        putExtra(
-                                            Intent.EXTRA_TEXT,
-                                            item.toString()
-                                        )
-                                        type = "text/plain"
-                                    }
-                                    val shareIntent = Intent.createChooser(sendIntent, null)
-                                    val context = LocalContext.current
-
                                     WifiActions(
-                                        onQrClick = { displayQr = item },
-                                        onShareClick = { context.startActivity(shareIntent) },
-                                        onSaveClick = {
+                                        item = item,
+                                        onSave = {
                                             viewModel.saveItem(item)
                                             Toast.makeText(context, "Saved to Home screen", Toast.LENGTH_SHORT).show()
                                         }
                                     )
                                 },
-
                                 onCardClicked = { viewModel.onItemClicked(index) },
                                 expanded = selectedId == index
                             ) {
@@ -112,22 +101,22 @@ fun ToolsScreen(
                 }
             }
         }
-
-        if (displayQr != null) {
-            QRBottomSheet(displayQr!!) {
-                displayQr = null
-            }
-        }
     }
 }
 
 @Composable
 fun ToolsTopBar(
-    scrollBehavior: TopAppBarScrollBehavior
+    scrollBehavior: TopAppBarScrollBehavior,
+    settingsAction: () -> Unit
 ) {
     TopAppBar(
         title = {
             Text(text = "Search")
+        },
+        actions = {
+            IconButton(onClick = settingsAction) {
+                Icon(imageVector = Icons.Outlined.Settings, contentDescription = "Open settings")
+            }
         },
         scrollBehavior = scrollBehavior
     )

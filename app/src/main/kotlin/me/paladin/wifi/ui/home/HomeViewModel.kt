@@ -10,12 +10,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import me.paladin.wifi.Locator
+import me.paladin.wifi.WifiPassword
 import me.paladin.wifi.models.WifiModel
 
 class HomeViewModel : ViewModel() {
-    private val dao = Locator.database.wifiDao()
+    private val dao = WifiPassword.database.wifiDao()
     private val _selectedId = MutableStateFlow(-1)
     val selectedId: StateFlow<Int> = _selectedId.asStateFlow()
 
@@ -26,27 +25,15 @@ class HomeViewModel : ViewModel() {
     )
 
     fun addItem(item: WifiModel) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                dao.post(item)
-            }
-        }
+        viewModelScope.launch(Dispatchers.IO) { dao.post(item) }
     }
 
     fun updateItem(item: WifiModel) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                dao.post(item)
-            }
-        }
+        viewModelScope.launch(Dispatchers.IO) { dao.post(item) }
     }
 
     fun removeItem(item: WifiModel) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                dao.delete(item)
-            }
-        }
+        viewModelScope.launch(Dispatchers.IO) { dao.delete(item) }
     }
 
     fun onItemClicked(itemId: Int) {

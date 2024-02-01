@@ -1,4 +1,4 @@
-package me.paladin.wifi.ui.components
+package me.paladin.wifi.ui.components.sheets
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
@@ -14,10 +14,8 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,24 +33,20 @@ import me.paladin.wifi.models.WifiModel
 @Composable
 fun CreateBottomSheet(
     saveCallback: (model: WifiModel) -> Unit,
-    hideCallback: () -> Unit
+    visible: Boolean,
+    onDismiss: () -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState()
-    val scope = rememberCoroutineScope()
-    val context = LocalContext.current
-    val listItems = arrayOf(WifiModel.TYPE_WPA, WifiModel.TYPE_WEP, WifiModel.TYPE_ENTERPRISE)
+    ModalSheet(visible = visible, onDismiss = onDismiss) { sheetState ->
+        val scope = rememberCoroutineScope()
+        val context = LocalContext.current
+        val listItems = arrayOf(WifiModel.TYPE_WPA, WifiModel.TYPE_WEP, WifiModel.TYPE_ENTERPRISE)
 
-    var expanded by remember { mutableStateOf(false) }
-    var wifiType by remember { mutableStateOf(listItems[0]) }
+        var expanded by remember { mutableStateOf(false) }
+        var wifiType by remember { mutableStateOf(listItems[0]) }
 
-    var ssid by remember { mutableStateOf("") }
-    var user by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
-    ModalBottomSheet(
-        onDismissRequest = hideCallback,
-        sheetState = sheetState
-    ) {
+        var ssid by remember { mutableStateOf("") }
+        var user by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
 
         Column(
             modifier = Modifier.padding(
@@ -169,7 +163,7 @@ fun CreateBottomSheet(
                                     type = wifiType,
                                     user = if (wifiType != WifiModel.TYPE_WPA) user else null
                                 ))
-                                hideCallback()
+                                onDismiss()
                             }
                         } else Toast.makeText(context, errorText, Toast.LENGTH_LONG).show()
                     },

@@ -32,28 +32,23 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import me.paladin.wifi.models.WifiModel
 import me.paladin.wifi.ui.components.AboutDialog
-import me.paladin.wifi.ui.components.CreateBottomSheet
-import me.paladin.wifi.ui.components.EditBottomSheet
 import me.paladin.wifi.ui.components.ExpandableCard
-import me.paladin.wifi.ui.components.QRBottomSheet
 import me.paladin.wifi.ui.components.WifiActions
 import me.paladin.wifi.ui.components.WifiItem
+import me.paladin.wifi.ui.components.sheets.CreateBottomSheet
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = viewModel(),
     settingsAction: () -> Unit
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val selectedId by viewModel.selectedId.collectAsState()
     val items by viewModel.items.collectAsState()
     val context = LocalContext.current
     var showCreate by remember { mutableStateOf(false) }
     var openAbout by remember { mutableStateOf(false) }
-    var displayQr by remember { mutableStateOf<WifiModel?>(null) }
-    var editModel by remember { mutableStateOf<WifiModel?>(null) }
 
     Scaffold(
         topBar = {
@@ -70,10 +65,7 @@ fun HomeScreen(
         },
 
         floatingActionButton = {
-            FloatingActionButton(
-                modifier = Modifier.padding(bottom = 24.dp),
-                onClick = { showCreate = true }
-            ) {
+            FloatingActionButton(onClick = { showCreate = true }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
             }
         },
@@ -88,20 +80,18 @@ fun HomeScreen(
             itemsIndexed(items) { index, item ->
                 ExpandableCard(
                     expandedContent = {
-                        val sendIntent: Intent = Intent().apply {
-                            action = Intent.ACTION_SEND
-                            putExtra(
-                                Intent.EXTRA_TEXT,
-                                item.toString()
-                            )
-                            type = "text/plain"
-                        }
-                        val shareIntent = Intent.createChooser(sendIntent, null)
-
                         WifiActions(
-                            onQrClick = { displayQr = item },
-                            onShareClick = { context.startActivity(shareIntent) },
-                            onEditClick = { editModel = item }
+                            item = item,
+                            onDelete = {
+                                viewModel.onItemClicked(-1)
+                                viewModel.removeItem(item)
+                            },
+                            onEdit = { ssid, password ->
+                                viewModel.updateItem(item.apply {
+                                    this.ssid = ssid
+                                    this.password = password
+                                })
+                            }
                         )
                     },
 
@@ -113,37 +103,16 @@ fun HomeScreen(
             }
         }
 
-        if (displayQr != null) {
-            QRBottomSheet(displayQr!!) {
-                displayQr = null
-            }
-        }
-
-        if (editModel != null) {
-            EditBottomSheet(editModel!!, deleteCallback = {
-                viewModel.onItemClicked(-1)
-                viewModel.removeItem(editModel!!)
-            }, saveCallback = { ssid, password ->
-                viewModel.updateItem(editModel!!.apply {
-                    this.ssid = ssid
-                    this.password = password
-                })
-            }) {
-                editModel = null
-            }
-        }
-
         if (openAbout)
             AboutDialog {
                 openAbout = false
             }
 
-        if (showCreate)
-            CreateBottomSheet(saveCallback = {
-                viewModel.addItem(it)
-            }) {
-                showCreate = false
-            }
+        CreateBottomSheet(visible = showCreate, saveCallback = {
+            viewModel.addItem(it)
+        }) {
+            showCreate = false
+        }
     }
 }
 

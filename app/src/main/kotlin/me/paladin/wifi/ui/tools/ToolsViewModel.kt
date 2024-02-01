@@ -9,18 +9,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import me.paladin.wifi.Locator
+import me.paladin.wifi.WifiPassword
 import me.paladin.wifi.data.RootRepository
 import me.paladin.wifi.models.WifiModel
 
 class ToolsViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
-    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
     private val _selectedId = MutableStateFlow(-1)
     val selectedId: StateFlow<Int> = _selectedId.asStateFlow()
+    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-    fun checkRootAndLoad() {
+    fun checkRootAndLoad() = viewModelScope.launch(Dispatchers.IO) {
         _uiState.update { UiState.Loading }
         Shell.getShell { shell ->
             if (shell.isRoot) {
@@ -31,10 +30,8 @@ class ToolsViewModel : ViewModel() {
     }
 
     fun saveItem(item: WifiModel) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                Locator.database.wifiDao().post(item)
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            WifiPassword.database.wifiDao().post(item)
         }
     }
 

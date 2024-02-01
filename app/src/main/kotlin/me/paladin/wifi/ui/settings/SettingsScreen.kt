@@ -13,7 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.viewmodel.compose.viewModel
-import me.paladin.wifi.Locator
 import me.paladin.wifi.models.AppTheme
 import me.paladin.wifi.ui.components.settings.ChooseRow
 import me.paladin.wifi.ui.components.settings.SwitchRow
@@ -21,8 +20,8 @@ import me.paladin.wifi.ui.main.viewmodels.ThemeViewModel
 
 @Composable
 fun SettingsScreen() {
-    val viewModel: ThemeViewModel = viewModel(factory = Locator.themeViewModelFactory)
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val viewModel: ThemeViewModel = viewModel()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val theme by viewModel.theme.collectAsState()
     val monet by viewModel.monet.collectAsState()
 
@@ -37,23 +36,11 @@ fun SettingsScreen() {
                 strings = listOf("Day", "Night", "Auto"),
                 title = { Text(text = "App Theme") },
                 subtitle = {
-                    Text(
-                        text = "Current app theme"
-                    )
+                    Text(theme.toString())
                 },
-                chosenIndex = when (theme) {
-                    AppTheme.DAY -> 0
-                    AppTheme.NIGHT -> 1
-                    AppTheme.AUTO -> 2
-                },
+                chosenIndex = theme.toIndex(),
                 onChoose = {
-                    viewModel.changeTheme(
-                        when (it) {
-                            0 -> AppTheme.DAY
-                            1 -> AppTheme.NIGHT
-                            else -> AppTheme.AUTO
-                        }
-                    )
+                    viewModel.changeTheme(AppTheme.fromIndex(it))
                 }
             )
             SwitchRow(

@@ -17,7 +17,7 @@ object ModernLoader {
 
         doc.getElementsByTag("Network").forEach { networkElement ->
             networkElement.getElementsByTag("WifiConfiguration").forEach { wifiElement ->
-                if (wifiElement.getElementsByAttributeValue("name", "ConfigKey")[0] != null) {
+                if (wifiElement.getElementsByAttributeValue("name", "ConfigKey").isNotEmpty()) {
                     var name = wifiElement.getElementsByAttributeValue("name", "SSID")[0].text()
                     name = name.trim('"')
 

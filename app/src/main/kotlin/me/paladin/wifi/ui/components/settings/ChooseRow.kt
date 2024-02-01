@@ -46,9 +46,13 @@ fun ChooseRow(
             )
         }
 
-        if (openChoose)
-            ChooseBottomSheet(strings = strings, chosenIndex = chosenIndex, chooseCallback = onChoose) {
-                openChoose = false
-            }
+        ChooseBottomSheet(
+            visible = openChoose,
+            strings = strings,
+            chosenIndex = chosenIndex,
+            chooseCallback = onChoose
+        ) {
+            openChoose = false
+        }
     }
 }

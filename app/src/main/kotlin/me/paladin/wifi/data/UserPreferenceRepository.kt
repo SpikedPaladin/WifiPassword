@@ -1,14 +1,11 @@
 package me.paladin.wifi.data
 
 import androidx.datastore.core.DataStore
-import androidx.datastore.core.IOException
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import me.paladin.wifi.models.AppTheme
@@ -25,14 +22,6 @@ class UserPreferencesRepository(
         get() = this[Keys.monet] ?: true
 
     val monet: Flow<Boolean> = dataStore.data
-        .catch {
-            // throws an IOException when an error is encountered when reading data
-            if (it is IOException) {
-                emit(emptyPreferences())
-            } else {
-                throw it
-            }
-        }
         .map { preferences ->
             preferences.monet
         }
@@ -43,30 +32,14 @@ class UserPreferencesRepository(
     }
 
     val theme: Flow<AppTheme> = dataStore.data
-        .catch {
-            // throws an IOException when an error is encountered when reading data
-            if (it is IOException) {
-                emit(emptyPreferences())
-            } else {
-                throw it
-            }
-        }
         .map {
-            when (it[Keys.theme]) {
-                "day" -> AppTheme.DAY
-                "night" -> AppTheme.NIGHT
-                else -> AppTheme.AUTO
-            }
+            AppTheme.fromPref(it[Keys.theme])
         }
         .distinctUntilChanged()
 
     suspend fun changeTheme(theme: AppTheme) {
         dataStore.edit {
-            it[Keys.theme] = when (theme) {
-                AppTheme.DAY -> "day"
-                AppTheme.NIGHT -> "night"
-                AppTheme.AUTO -> "auto"
-            }
+            it[Keys.theme] = theme.toPref()
         }
     }
 }

@@ -1,4 +1,4 @@
-package me.paladin.wifi.ui.components
+package me.paladin.wifi.ui.components.sheets
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,10 +12,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,17 +30,13 @@ import me.paladin.wifi.models.WifiModel
 @Composable
 fun EditBottomSheet(
     model: WifiModel,
-    deleteCallback: () -> Unit,
-    saveCallback: (ssid: String, password: String) -> Unit,
-    hideCallback: () -> Unit
+    onDelete: () -> Unit,
+    onEdit: (ssid: String, password: String) -> Unit,
+    visible: Boolean,
+    onDismiss: () -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState()
-    val scope = rememberCoroutineScope()
-
-    ModalBottomSheet(
-        onDismissRequest = hideCallback,
-        sheetState = sheetState
-    ) {
+    ModalSheet(visible = visible, onDismiss = onDismiss) { sheetState ->
+        val scope = rememberCoroutineScope()
         var ssid by remember { mutableStateOf(model.ssid) }
         var password by remember { mutableStateOf(model.password) }
 
@@ -76,8 +70,8 @@ fun EditBottomSheet(
                     onClick = {
                         scope.launch { sheetState.hide() }.invokeOnCompletion {
                             if (!sheetState.isVisible) {
-                                deleteCallback()
-                                hideCallback()
+                                onDelete()
+                                onDismiss()
                             }
                         }
                     },
@@ -100,8 +94,8 @@ fun EditBottomSheet(
                     onClick = {
                         scope.launch { sheetState.hide() }.invokeOnCompletion {
                             if (!sheetState.isVisible) {
-                                saveCallback(ssid, password)
-                                hideCallback()
+                                onEdit(ssid, password)
+                                onDismiss()
                             }
                         }
                     },

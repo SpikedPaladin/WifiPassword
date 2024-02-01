@@ -25,7 +25,7 @@ fun BottomBarNavGraph(
         }
 
         composable(MainDestinations.SEARCH_ROUTE) {
-            ToolsScreen()
+            ToolsScreen(settingsAction = settingsAction)
         }
     }
 }

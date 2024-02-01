@@ -11,35 +11,31 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import me.paladin.wifi.ui.components.sheets.ModalSheet
 
 @Composable
 fun ChooseBottomSheet(
+    visible: Boolean,
     strings: List<String>,
     chosenIndex: Int,
     chooseCallback: (Int) -> Unit,
-    hideCallback: () -> Unit
+    onDismiss: () -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState()
-    val scope = rememberCoroutineScope()
+    ModalSheet(visible = visible, onDismiss = onDismiss) { sheetState ->
+        val scope = rememberCoroutineScope()
 
-    ModalBottomSheet(
-        onDismissRequest = hideCallback,
-        sheetState = sheetState
-    ) {
-        LazyColumn(modifier = Modifier.padding(bottom = 8.dp)) {
+        LazyColumn(modifier = Modifier.padding(bottom = 16.dp)) {
             itemsIndexed(strings) { index, item ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)
+                        .padding(12.dp)
                         .clickable(
                             onClick = {
                                 scope
@@ -47,7 +43,7 @@ fun ChooseBottomSheet(
                                     .invokeOnCompletion {
                                         if (!sheetState.isVisible) {
                                             chooseCallback(index)
-                                            hideCallback()
+                                            onDismiss()
                                         }
                                     }
                             }

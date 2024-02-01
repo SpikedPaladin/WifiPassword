@@ -1,4 +1,4 @@
-package me.paladin.wifi.ui.components
+package me.paladin.wifi.ui.components.sheets
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -17,16 +15,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import me.paladin.wifi.models.WifiModel
+import me.paladin.wifi.ui.components.rememberQrBitmapPainter
 
 @Composable
-fun QRBottomSheet(model: WifiModel, hideCallback: () -> Unit) {
-    val sheetState = rememberModalBottomSheetState()
-    val scope = rememberCoroutineScope()
-
-    ModalBottomSheet(
-        onDismissRequest = hideCallback,
-        sheetState = sheetState
-    ) {
+fun QRBottomSheet(
+    model: WifiModel,
+    visible: Boolean,
+    onDismiss: () -> Unit
+) {
+    ModalSheet(visible = visible, onDismiss = onDismiss) { sheetState ->
+        val scope = rememberCoroutineScope()
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -45,11 +43,11 @@ fun QRBottomSheet(model: WifiModel, hideCallback: () -> Unit) {
             }
 
             Button(onClick = {
-                scope.launch { sheetState.hide() }.invokeOnCompletion {
-                    if (!sheetState.isVisible) {
-                        hideCallback()
+                scope
+                    .launch { sheetState.hide() }
+                    .invokeOnCompletion {
+                        onDismiss()
                     }
-                }
             }) {
                 Text("Hide")
             }
